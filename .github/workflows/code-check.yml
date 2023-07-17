@@ -41,11 +41,11 @@ jobs:
       - name: Setup
         run: make ci-setup
 
-      # - name: Code linter check
-      #   run: make lint-code
+      - name: Code linter check
+        run: make lint-code
 
-      # - name: Slim linter check
-      #   run: make lint-slim
+      - name: Slim linter check
+        run: make lint-slim
 
       - name: Tests
         run: make test
