@@ -1,0 +1,14 @@
+.container
+  .d-flex.flex-wrap.align-items-center.justify-content-between.justify-content-md-between.py-3.mb-4.border-bottom
+    .navbar.navbar-expand-md.navbar-light.me-auto
+      nav_menu_item.me-2 = link_to t('navigation.links.home'), root_path, class: 'nav-link'
+      - if @current_user.present?
+        .collapse.navbar-collapse
+          ul.nav.nav-pills.flex-grow-1.navbar-nav.me-auto
+    ul.nav.nav-pills
+      - if @current_user.present?
+        nav_menu_item.me-2.nav-link.text-dark = t('navigation.hello', user_name: current_user.nickname)
+        nav_menu_item.me-2 = link_to t('navigation.links.log_out'), auth_logout_path, class: 'nav-link text-dark'
+      - else
+        nav_menu_item.me-2 = button_to t('navigation.links.log_in'), auth_request_path(:github), data: { turbo: false },
+          method: :post, class: 'nav-link text-dark'

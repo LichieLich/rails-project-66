@@ -3,15 +3,14 @@
 module Web
   class AuthController < Web::ApplicationController
     def callback
-      user = User.find_or_create_by auth_params
+      @user_info = request.env['omniauth.auth']
 
-      user.nickname = auth['info']['nickname']
-      user.name = auth['info']['name']
-      user.email = auth['info']['email']
-      user.image_url = auth['info']['image']
-      user.token = auth['credentials']['token'] # Токен пользователя, потребуется нам позднее
-
-      user.save!
+      session[:user_id] = User.find_or_create_by(email: @user_info['info']['email']) do |user|
+        user.nickname = @user_info['info']['nickname']
+        user.email = @user_info['info']['email']
+        # user.image_url = @user_info['info']['image_url']
+        user.token = @user_info['credentials']['token']
+      end.id
 
       redirect_to :root
     end
