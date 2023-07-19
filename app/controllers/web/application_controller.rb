@@ -2,9 +2,9 @@
 
 module Web
   class ApplicationController < ActionController::Base
-    def current_user
-      # include Pundit::Authorization
+    include Pundit::Authorization
 
+    def current_user
       @current_user ||= User.find_by(id: session[:user_id])
     end
   end
