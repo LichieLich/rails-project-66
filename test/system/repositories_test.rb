@@ -1,43 +1,45 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class RepositoriesTest < ApplicationSystemTestCase
   setup do
     @repository = repositories(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit repositories_url
-    assert_selector "h1", text: "Repositories"
+    assert_selector 'h1', text: 'Repositories'
   end
 
-  test "should create repository" do
+  test 'should create repository' do
     visit repositories_url
-    click_on "New repository"
+    click_on 'New repository'
 
-    fill_in "Name", with: @repository.name
-    fill_in "User", with: @repository.user_id
-    click_on "Create Repository"
+    fill_in 'Name', with: @repository.name
+    fill_in 'User', with: @repository.user_id
+    click_on 'Create Repository'
 
-    assert_text "Repository was successfully created"
-    click_on "Back"
+    assert_text 'Repository was successfully created'
+    click_on 'Back'
   end
 
-  test "should update Repository" do
+  test 'should update Repository' do
     visit repository_url(@repository)
-    click_on "Edit this repository", match: :first
+    click_on 'Edit this repository', match: :first
 
-    fill_in "Name", with: @repository.name
-    fill_in "User", with: @repository.user_id
-    click_on "Update Repository"
+    fill_in 'Name', with: @repository.name
+    fill_in 'User', with: @repository.user_id
+    click_on 'Update Repository'
 
-    assert_text "Repository was successfully updated"
-    click_on "Back"
+    assert_text 'Repository was successfully updated'
+    click_on 'Back'
   end
 
-  test "should destroy Repository" do
+  test 'should destroy Repository' do
     visit repository_url(@repository)
-    click_on "Destroy this repository", match: :first
+    click_on 'Destroy this repository', match: :first
 
-    assert_text "Repository was successfully destroyed"
+    assert_text 'Repository was successfully destroyed'
   end
 end

@@ -3,5 +3,5 @@
 class User < ApplicationRecord
   validates :email, presence: true
 
-  has_many :repositories
+  has_many :repositories, dependent: :destroy
 end

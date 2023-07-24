@@ -1,9 +1,9 @@
+# frozen_string_literal: true
 
 module Web
   class RepositoriesController < ApplicationController
     include RepositoryHelper
-    before_action :set_repository, only: %i[ show edit update destroy ]
-    
+    before_action :set_repository, only: %i[show edit update destroy]
 
     # GET /repositories or /repositories.json
     def index
@@ -11,19 +11,17 @@ module Web
     end
 
     # GET /repositories/1 or /repositories/1.json
-    def show
-    end
+    def show; end
 
     # GET /repositories/new
     def new
       @repository = Repository.new
       @repositories = user_repositories(current_user)
-      # TODO Убрать из списка уже добавленные репы
+      # TODO: Убрать из списка уже добавленные репы
     end
 
     # GET /repositories/1/edit
-    def edit
-    end
+    def edit; end
 
     # POST /repositories or /repositories.json
     def create
@@ -35,7 +33,7 @@ module Web
       )
 
       if @repository.save
-        redirect_to repository_url(@repository), notice: "Repository was successfully created."
+        redirect_to repository_url(@repository), notice: 'Repository was successfully created.'
       else
         render :new, status: :unprocessable_entity
       end
@@ -44,7 +42,7 @@ module Web
     # PATCH/PUT /repositories/1 or /repositories/1.json
     def update
       if @repository.update(repository_params)
-        redirect_to repository_url(@repository), notice: "Repository was successfully updated."
+        redirect_to repository_url(@repository), notice: 'Repository was successfully updated.'
       else
         render :edit, status: :unprocessable_entity
       end
@@ -54,18 +52,19 @@ module Web
     def destroy
       @repository.destroy
 
-      redirect_to repositories_url, notice: "Repository was successfully destroyed."
+      redirect_to repositories_url, notice: 'Repository was successfully destroyed.'
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_repository
-        @repository = Repository.find(params[:id])
-      end
 
-      # Only allow a list of trusted parameters through.
-      def repository_params
-        params.require(:repository).permit(:repository_github_id, :language, :name, :user_id)
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_repository
+      @repository = Repository.find(params[:id])
+    end
+
+    # Only allow a list of trusted parameters through.
+    def repository_params
+      params.require(:repository).permit(:repository_github_id, :language, :name, :user_id)
+    end
   end
 end
