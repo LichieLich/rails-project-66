@@ -5,6 +5,8 @@
       - if current_user.present?
         .collapse.navbar-collapse
           ul.nav.nav-pills.flex-grow-1.navbar-nav.me-auto
+            / TODO Подсветка выделенных элементов меню
+            nav_menu_item.me-2 = link_to t('navigation.links.repositories'), repositories_path, class: 'nav-link'
     ul.nav.nav-pills
       - if current_user.present?
         nav_menu_item.me-2.nav-link.text-dark = t('navigation.hello', user_name: current_user.nickname)

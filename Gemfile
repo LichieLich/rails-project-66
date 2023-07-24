@@ -53,11 +53,14 @@ gem 'bootsnap', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem 'enumerize'
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'simple_form'
 
 gem 'slim-rails'
 
+gem 'octokit'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
