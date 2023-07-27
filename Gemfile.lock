@@ -130,6 +130,9 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.18.1)
+    minitest-power_assert (0.3.1)
+      minitest
+      power_assert (>= 1.1)
     msgpack (1.7.1)
     multi_xml (0.6.0)
     net-imap (0.3.6)
@@ -173,6 +176,7 @@ GEM
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
+    power_assert (2.0.3)
     public_suffix (5.0.3)
     puma (5.6.6)
       nio4r (~> 2.0)
@@ -320,6 +324,7 @@ DEPENDENCIES
   enumerize
   jbuilder
   jsbundling-rails
+  minitest-power_assert
   octokit
   omniauth
   omniauth-github
