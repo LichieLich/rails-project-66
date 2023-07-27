@@ -75,6 +75,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'slim_lint'
+  gem 'webmock'
 end
 
 group :development do

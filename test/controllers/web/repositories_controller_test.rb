@@ -5,6 +5,8 @@ require 'test_helper'
 class RepositoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @repository = repositories(:one)
+    @user = users(:one)
+    sign_in(@user)
   end
 
   test 'should get index' do
@@ -13,15 +15,27 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get new' do
+    stub_request(:get, /github.com/)
+      .to_return(body: "", headers: {content_type: 'application/json'})
+
     get new_repository_url
     assert_response :success
   end
 
   test 'should create repository' do
-    assert_difference('Repository.count') do
-      post repositories_url, params: { repository: { name: @repository.name, user_id: @repository.user_id } }
-    end
+    response_body = load_fixture('files/mocked_repository.json')
+    mocked_json_response = JSON.parse(response_body)
 
+    stub_request(:get, /github.com/)
+      .to_return(body: response_body, headers: {content_type: 'application/json'})
+    post repositories_path(repository: { link: mocked_json_response['html_url'] })
+
+    created_repository = Repository.find_by!(
+      name: mocked_json_response['name'],
+      language: mocked_json_response['language']
+    )
+
+    assert { created_repository }
     assert_redirected_to repository_url(Repository.last)
   end
 
