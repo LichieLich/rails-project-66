@@ -15,9 +15,6 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get new' do
-    stub_request(:get, /github.com/)
-      .to_return(body: "", headers: {content_type: 'application/json'})
-
     get new_repository_url
     assert_response :success
   end
@@ -26,9 +23,7 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     response_body = load_fixture('files/mocked_repository.json')
     mocked_json_response = JSON.parse(response_body)
 
-    stub_request(:get, /github.com/)
-      .to_return(body: response_body, headers: {content_type: 'application/json'})
-    post repositories_path(repository: { link: mocked_json_response['html_url'] })
+    post repositories_path(repository: { repository_github_id: mocked_json_response['id'] })
 
     created_repository = Repository.find_by!(
       name: mocked_json_response['name'],

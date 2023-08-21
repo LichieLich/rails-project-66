@@ -2,7 +2,6 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    include RepositoryHelper
     before_action :set_repository, only: %i[show edit update destroy]
 
     # GET /repositories or /repositories.json
@@ -16,7 +15,7 @@ module Web
     # GET /repositories/new
     def new
       @repository = Repository.new
-      @repositories = user_repositories(current_user)
+      @repositories = github_repository_api.user_repositories(current_user)
       # TODO: Убрать из списка уже добавленные репы
     end
 
@@ -25,7 +24,7 @@ module Web
 
     # POST /repositories or /repositories.json
     def create
-      repo = get_repository(current_user, params[:repository][:repository_github_id])
+      repo = github_repository_api.get_repository(current_user, params[:repository][:repository_github_id])
       @repository = current_user.repositories.build(
         repository_github_id: repo.id,
         name: repo.name,
@@ -65,6 +64,10 @@ module Web
     # Only allow a list of trusted parameters through.
     def repository_params
       params.require(:repository).permit(:repository_github_id, :language, :name, :user_id)
+    end
+
+    def github_repository_api
+      ApplicationContainer[:github_repository_api]
     end
   end
 end

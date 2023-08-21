@@ -35,7 +35,6 @@ class ActionDispatch::IntegrationTest
 
     get callback_auth_url('github')
     session[:user_id] = user.id
-    # binding.irb
   end
 
   def signed_in?
