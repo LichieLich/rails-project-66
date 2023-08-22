@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Check < ApplicationRecord
+  include AASM
+
   belongs_to :repository
 
   aasm whiny_transitions: false, column: :status do

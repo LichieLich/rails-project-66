@@ -10,9 +10,12 @@ module Web::Repositories
 
     def create
       @check = @repository.checks.build(check_params)
-      @check.status = 'ZBS'
+      @check.perform_check
+
       @check.is_successful = true
       @check.commit_id = 'sdfsfsdfdsf'
+
+      @check.finish_check
 
       if @check.save
         redirect_to repository_url(@repository), notice: 'Check started'
