@@ -10,7 +10,9 @@ module Web
     end
 
     # GET /repositories/1 or /repositories/1.json
-    def show; end
+    def show
+      @checks = nil
+    end
 
     # GET /repositories/new
     def new
