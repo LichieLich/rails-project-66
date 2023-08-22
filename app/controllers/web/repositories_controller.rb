@@ -11,7 +11,7 @@ module Web
 
     # GET /repositories/1 or /repositories/1.json
     def show
-      @checks = nil
+      @checks = @repository.checks
     end
 
     # GET /repositories/new

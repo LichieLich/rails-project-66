@@ -1,0 +1,21 @@
+.container
+  .p-4.align-items-center.border.shadow.bg-white.rounded-3
+    = button_to 'Go to repo', repository_path(@repository), class: 'btn btn-primary mb-4'
+    h1 = "Check ##{@check.id}"
+    table.table
+    tbody
+      tr
+        td = t('checks.table.head.created_at')
+        td = @check.created_at
+      tr
+        td = t('checks.table.head.status')
+        td = @check.status
+      tr
+        td = t('checks.table.head.is_successful')
+        td = @check.is_successful
+      tr
+        td = t('checks.table.head.warn_count')
+        td = 123
+      tr
+        td = t('checks.table.head.commit_id')
+        td = @check.commit_id
