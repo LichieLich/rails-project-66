@@ -4,6 +4,10 @@ module Web::Repositories
   class ChecksController < ApplicationController
     before_action :set_repository, only: %i[create show]
 
+    def show
+      @check = @repository.checks.find_by(id: params[:id])
+    end
+
     def create
       @check = @repository.checks.build(check_params)
       @check.status = 'ZBS'
@@ -15,10 +19,6 @@ module Web::Repositories
       else
         redirect_to repository_url(@repository), notice: 'Check not started'
       end
-    end
-
-    def show
-      @check = @repository.checks.find_by(id: params[:id])
     end
 
     private
