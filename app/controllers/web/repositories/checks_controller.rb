@@ -6,16 +6,30 @@ module Web::Repositories
 
     def show
       @check = @repository.checks.find_by(id: params[:id])
+      @errors = @check.linter_result.split("\n").each_with_object([]) do |line, arr| 
+        next if line.empty?
+        arr << line.split(/\s{2,}/)
+      end
+      
+      redirect_to repository_url(@repository) unless @check.finished?
     end
 
     def create
       @check = @repository.checks.build(check_params)
-      @check.perform_check
+      @check.start_check!
 
-      @check.is_successful = true
-      @check.commit_id = 'sdfsfsdfdsf'
+      begin
+        repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
+      rescue => e
+        @check.fail_get_repository!
+        raise e
+      end
 
-      @check.finish_check
+      @check.got_repository_data!
+      check_result = repository_checker.perform_check(@check, repository_data)
+      # @check.commit_id = repository_data
+
+      @check.finish_check!
 
       if @check.save
         redirect_to repository_url(@repository), notice: 'Check started'
@@ -32,6 +46,14 @@ module Web::Repositories
 
     def set_repository
       @repository = Repository.find_by(id: params[:repository_id])
+    end
+
+    def repository_checker
+      ApplicationContainer[:repository_checker]
+    end
+
+    def github_repository_api
+      ApplicationContainer[:github_repository_api]
     end
   end
 end

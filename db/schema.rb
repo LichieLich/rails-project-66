@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_165839) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_28_223537) do
   create_table "checks", force: :cascade do |t|
     t.string "status"
     t.string "commit_id"
-    t.boolean "is_successful"
+    t.text "linter_result"
     t.integer "repository_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

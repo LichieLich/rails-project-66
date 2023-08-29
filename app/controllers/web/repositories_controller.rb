@@ -26,11 +26,11 @@ module Web
 
     # POST /repositories or /repositories.json
     def create
-      repo = github_repository_api.get_repository(current_user, params[:repository][:repository_github_id])
+      repository_data = github_repository_api.get_repository(current_user, params[:repository][:repository_github_id])
       @repository = current_user.repositories.build(
-        repository_github_id: repo.id,
-        name: repo.name,
-        language: repo.language.downcase
+        repository_github_id: repository_data.id,
+        name: repository_data.name,
+        language: repository_data.language&.downcase
       )
 
       if @repository.save

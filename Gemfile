@@ -65,6 +65,7 @@ gem 'octokit'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
+gem 'open3'
 
 gem 'dry-container'
 gem 'pundit'

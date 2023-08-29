@@ -3,19 +3,38 @@
     = link_to 'Go to repo', repository_path(@repository), class: 'btn btn-primary mb-4'
     h1 = "Check ##{@check.id}"
     table.table
-    tbody
-      tr
-        td = t('checks.table.head.created_at')
-        td = @check.created_at
-      tr
-        td = t('checks.table.head.status')
-        td = @check.status
-      tr
-        td = t('checks.table.head.is_successful')
-        td = @check.is_successful
-      tr
-        td = t('checks.table.head.warn_count')
-        td = 123
-      tr
-        td = t('checks.table.head.commit_id')
-        td = @check.commit_id
+      tbody
+        tr
+          td = t('checks.table.head.created_at')
+          td = @check.created_at
+        tr
+          td = t('checks.table.head.status')
+          td = @check.status
+        tr
+          td = t('checks.table.head.is_successful')
+          td = @check.linter_result&.empty? || false
+        tr
+          td = t('checks.table.head.warn_count')
+          / td = @check.linter_result
+        tr
+          td = t('checks.table.head.commit_id')
+          td = @check.commit_id
+    table.table.table-hover.mb-5
+      / TODO Need cache
+      thead
+        tr
+          th = t('checks.results.table.head.message')
+          th = t('checks.results.table.head.rule_id')
+          th = t('checks.results.table.head.level')
+          th = t('checks.results.table.head.place')
+      tbody
+        - @errors.each do |error_line|
+          tr
+            - if error_line&.count > 1
+              td = error_line[3]
+              td = error_line[4]
+              td = error_line[2]
+              td = error_line[1]
+            - else
+              / TODO Сделать в виде ссылки на файл
+              td(colspan = "4") =  error_line.first

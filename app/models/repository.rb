@@ -5,5 +5,6 @@ class Repository < ApplicationRecord
 
   belongs_to :user
   has_many :checks, dependent: :destroy
+  validates :language, presence: true
   enumerize :language, in: [:javascript]
 end
