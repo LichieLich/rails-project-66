@@ -30,7 +30,7 @@
       tbody
         - @errors.each do |error_line|
           tr
-            - if error_line&.count > 1
+            - if error_line.count > 1
               td = error_line[3]
               td = error_line[4]
               td = error_line[2]

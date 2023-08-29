@@ -10,7 +10,7 @@ class Check < ApplicationRecord
   aasm whiny_transitions: false, column: :status do
     state :not_checked, initial: true, display: 'Not checked'
     state :getting_repository_data, display: 'get rp data'
-    state :cloning_repository, display:'cloning'
+    state :cloning_repository, display: 'cloning'
     state :linter_in_progress, display: 'linter ip'
     state :finished, display: 'Checked'
     state :failed_clone, display: 'failed cloning'

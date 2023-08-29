@@ -6,9 +6,9 @@ class RepositoryChecker
 
     begin
       BashRunner.run("rm -r -f #{@repository_folder}")
-      BashRunner.run("mkdir tmp/repositories")
+      BashRunner.run('mkdir tmp/repositories')
       BashRunner.run("git clone #{repository_data.clone_url} #{@repository_folder}")
-    rescue => e
+    rescue StandardError => e
       check.fail_clone!
       raise e
     end
@@ -17,13 +17,13 @@ class RepositoryChecker
 
     case repository_data.language.downcase
     when 'javascript'
-      eslint_check(check)
+      eslint_check
     else
       raise "#{repository_data.language} не поддерживается"
     end
   end
 
-  def self.eslint_check(check)
-    check.linter_result = BashRunner.run("eslint #{@repository_folder}/**/*.js")
+  def self.eslint_check
+    BashRunner.run("eslint #{@repository_folder}/**/*.js")
   end
 end

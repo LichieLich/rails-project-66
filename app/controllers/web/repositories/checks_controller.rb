@@ -6,11 +6,12 @@ module Web::Repositories
 
     def show
       @check = @repository.checks.find_by(id: params[:id])
-      @errors = @check.linter_result.split("\n").each_with_object([]) do |line, arr| 
+      @errors = @check.linter_result.split("\n").each_with_object([]) do |line, arr|
         next if line.empty?
+
         arr << line.split(/\s{2,}/)
       end
-      
+
       redirect_to repository_url(@repository) unless @check.finished?
     end
 
@@ -20,13 +21,13 @@ module Web::Repositories
 
       begin
         repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
-      rescue => e
+      rescue StandardError => e
         @check.fail_get_repository!
         raise e
       end
 
       @check.got_repository_data!
-      check_result = repository_checker.perform_check(@check, repository_data)
+      @check.linter_result = repository_checker.perform_check(@check, repository_data)
       # @check.commit_id = repository_data
 
       @check.finish_check!
