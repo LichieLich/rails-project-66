@@ -15,26 +15,29 @@
           td = @check.linter_result&.empty? || false
         tr
           td = t('checks.table.head.warn_count')
-          / td = @check.linter_result
+          - count = 0
+          - @errors.each do |error|
+            - count += error['messages'].count
+          td = count
         tr
           td = t('checks.table.head.commit_id')
-          td = @check.commit_id
+          td = link_to(@check.commit_id[0..6], @repository_data[:html_url]+ "/tree/#{@check.commit_id}")
+    / TODO Сделать отдельными паршоами для каждого языка?
     table.table.table-hover.mb-5
       / TODO Need cache
       thead
         tr
           th = t('checks.results.table.head.message')
           th = t('checks.results.table.head.rule_id')
-          th = t('checks.results.table.head.level')
           th = t('checks.results.table.head.place')
       tbody
-        - @errors.each do |error_line|
+        - @errors.each do |error|
           tr
-            - if error_line.count > 1
-              td = error_line[3]
-              td = error_line[4]
-              td = error_line[2]
-              td = error_line[1]
-            - else
-              / TODO Сделать в виде ссылки на файл
-              td(colspan = "4") =  error_line.first
+            - relative_path = error['filePath'].gsub("#{Rails.root}/tmp/repositories/#{@repository_data[:name]}", '')
+            td(colspan = "4") = link_to(relative_path, @repository_data[:html_url]+ "/tree/#{@check.commit_id}" + relative_path)
+          - error['messages'].each do |error_message|
+            tr
+              td = error_message['message']
+              td = error_message['ruleId']
+              td = "#{error_message['line']}:#{error_message['column']}"
+          

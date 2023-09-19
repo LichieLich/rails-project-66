@@ -16,4 +16,6 @@ class GithubRepositoryApiStub
   end
 
   def self.user_repositories(_user); end
+
+  def self.get_last_commit(_user, _id); end
 end

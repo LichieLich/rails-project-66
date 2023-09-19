@@ -24,6 +24,6 @@ class RepositoryChecker
   end
 
   def self.eslint_check
-    BashRunner.run("eslint #{@repository_folder}/**/*.js")
+    BashRunner.run("eslint #{@repository_folder}/**/*.js --format json")
   end
 end

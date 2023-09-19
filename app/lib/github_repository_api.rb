@@ -12,4 +12,9 @@ class GithubRepositoryApi
   def self.user_repositories(user)
     client(user).repos
   end
+
+  def self.get_last_commit(user, id)
+    # binding.irb
+    client(user).commits(id).first[:sha].to_s
+  end
 end

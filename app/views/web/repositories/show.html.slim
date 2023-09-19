@@ -29,6 +29,6 @@
           tr
             td = link_to check.id, repository_check_path(@repository, check)
             td = check.status
-            td = check.commit_id
+            td = link_to(check.commit_id[0..6], @repository_data[:html_url]+ "/tree/#{check.commit_id}")
             td = check.linter_result&.empty? || false
             td = check.created_at

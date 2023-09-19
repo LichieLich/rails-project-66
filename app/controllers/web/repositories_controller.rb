@@ -12,6 +12,7 @@ module Web
     # GET /repositories/1 or /repositories/1.json
     def show
       @checks = @repository.checks
+      @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
     end
 
     # GET /repositories/new
