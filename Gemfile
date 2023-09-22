@@ -79,6 +79,7 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'slim_lint'
   gem 'webmock'
+  gem 'faker'
 end
 
 group :development do
