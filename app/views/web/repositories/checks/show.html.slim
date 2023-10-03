@@ -15,14 +15,10 @@
           td = @check.linter_result&.empty? || false
         tr
           td = t('checks.table.head.warn_count')
-          - count = 0
-          - @errors.each do |error|
-            - count += error['messages'].count
-          td = count
+          = render partial: "web/repositories/checks/#{@repository.language}/error_count", locals: { errors: @errors }
         tr
           td = t('checks.table.head.commit_id')
           td = link_to(@check.commit_id[0..6], @repository_data[:html_url] + "/tree/#{@check.commit_id}")
-    / TODO Сделать отдельными паршоами для каждого языка?
     table.table.table-hover.mb-5
       / TODO Need cache
       thead
@@ -31,12 +27,4 @@
           th = t('checks.results.table.head.rule_id')
           th = t('checks.results.table.head.place')
       tbody
-        - @errors.each do |error|
-          tr
-            - relative_path = error['filePath'].gsub("#{Rails.root}/tmp/repositories/#{@repository_data[:name]}", '')
-            td(colspan = "4") = link_to(relative_path, @repository_data[:html_url] + "/tree/#{@check.commit_id}" + relative_path)
-          - error['messages'].each do |error_message|
-            tr
-              td = error_message['message']
-              td = error_message['ruleId']
-              td = "#{error_message['line']}:#{error_message['column']}"
+        = render partial: "web/repositories/checks/#{@repository.language}/table", locals: { errors: @errors, repository_data: @repository_data, check: @check }

@@ -18,6 +18,8 @@ class RepositoryChecker
     case repository_data.language.downcase
     when 'javascript'
       eslint_check
+    when 'ruby'
+      rubocop_check
     else
       raise "#{repository_data.language} не поддерживается"
     end
@@ -25,5 +27,9 @@ class RepositoryChecker
 
   def self.eslint_check
     BashRunner.run("eslint #{@repository_folder}/**/*.js --format json")
+  end
+
+  def self.rubocop_check
+    BashRunner.run("rubocop #{@repository_folder} --format json")
   end
 end

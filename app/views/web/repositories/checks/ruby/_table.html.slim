@@ -1,0 +1,10 @@
+/ - binding.irb
+- errors['files'].each do |error|
+  tr
+    - relative_path = error['path'].gsub("#{Rails.root}/tmp/repositories/#{repository_data[:name]}", '')
+    td(colspan = "4") = link_to(relative_path, repository_data[:html_url] + "/tree/#{check.commit_id}" + relative_path)
+  - error['offenses'].each do |error_message|
+    tr
+      td = error_message['message']
+      td = error_message['cop_name']
+      td = "#{error_message['location']['start_line']}:#{error_message['location']['start_column']}"
