@@ -10,6 +10,7 @@ module Web
         user.email = @user_info['info']['email']
         # user.image_url = @user_info['info']['image_url']
         user.token = @user_info['credentials']['token']
+        user.github_id = @user_info['uid']
       end.id
 
       redirect_to :root

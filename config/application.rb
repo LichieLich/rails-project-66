@@ -25,6 +25,6 @@ module RailsProject66
       g.template_engine :slim
     end
 
-    routes.default_url_options = { host: ENV['BASE_URL'] }
+    routes.default_url_options = { host: ENV.fetch('BASE_URL', nil) }
   end
 end
