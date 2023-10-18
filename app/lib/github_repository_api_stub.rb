@@ -18,4 +18,6 @@ class GithubRepositoryApiStub
   def self.user_repositories(_user); end
 
   def self.get_last_commit(_user, _id); end
+
+  def self.enable_webhook(_user, _name); end
 end

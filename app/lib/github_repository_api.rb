@@ -14,7 +14,21 @@ class GithubRepositoryApi
   end
 
   def self.get_last_commit(user, id)
-    # binding.irb
     client(user).commits(id).first[:sha].to_s
+  end
+
+  def self.enable_webhook(user, name)
+    client(user).create_hook(
+      name,
+      'web',
+      {
+        url: "https://#{ENV.fetch('BASE_URL', nil)}/api/checks",
+        content_type: 'x-www-form-urlencoded'
+      },
+      {
+        events: ['push'],
+        active: true
+      }
+    )
   end
 end

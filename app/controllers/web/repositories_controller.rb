@@ -34,6 +34,9 @@ module Web
         language: repository_data.language&.downcase
       )
 
+      # TODO Сделать подписку на вебхуки опциональной при создании репы
+      github_repository_api.enable_webhook(current_user, repository_data.full_name)
+
       if @repository.save
         redirect_to repository_url(@repository), notice: 'Repository was successfully created.'
       else
