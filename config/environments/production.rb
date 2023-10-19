@@ -103,4 +103,6 @@ Rails.application.configure do
     port: ENV['SMTP_PORT'] || '25',
     authentication: :cram_md5
   }
+
+  config.serve_static_files = true
 end
