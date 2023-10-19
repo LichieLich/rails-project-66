@@ -3,6 +3,9 @@
 module Web
   class RepositoriesController < ApplicationController
     before_action :set_repository, only: %i[show edit update destroy]
+    before_action only: %i[index new create] do
+      authorize Repository
+    end
 
     # GET /repositories or /repositories.json
     def index
@@ -11,6 +14,8 @@ module Web
 
     # GET /repositories/1 or /repositories/1.json
     def show
+      authorize @repository
+
       @checks = @repository.checks
       @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
     end
@@ -23,7 +28,9 @@ module Web
     end
 
     # GET /repositories/1/edit
-    def edit; end
+    def edit
+      authorize @repository
+    end
 
     # POST /repositories or /repositories.json
     def create
@@ -46,6 +53,8 @@ module Web
 
     # PATCH/PUT /repositories/1 or /repositories/1.json
     def update
+      authorize @repository
+
       if @repository.update(repository_params)
         redirect_to repository_url(@repository), notice: 'Repository was successfully updated.'
       else
@@ -55,6 +64,8 @@ module Web
 
     # DELETE /repositories/1 or /repositories/1.json
     def destroy
+      authorize @repository
+
       @repository.destroy
 
       redirect_to repositories_url, notice: 'Repository was successfully destroyed.'
