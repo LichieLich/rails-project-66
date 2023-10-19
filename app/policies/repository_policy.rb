@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RepositoryPolicy < ApplicationPolicy
   attr_reader :user, :repository
 
