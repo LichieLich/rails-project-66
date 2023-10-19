@@ -2,7 +2,9 @@
 
 module Web::Repositories
   class ChecksController < ApplicationController
+    include CheckHelper
     before_action :set_repository, only: %i[create show]
+    
 
     def show
       @check = @repository.checks.find_by(id: params[:id])
@@ -27,9 +29,10 @@ module Web::Repositories
       @check.got_repository_data!
       @check.linter_result = repository_checker.perform_check(@check, repository_data)
 
-      @check.finish_check!
-
       if @check.save
+        # TODO: Добавить возможность отписки
+        @check.finish_check!
+        send_complete_notification(current_user, @check)
         redirect_to repository_url(@repository), notice: 'Check started'
       else
         redirect_to repository_url(@repository), notice: 'Check not started'
