@@ -1,9 +1,9 @@
 .container
 
-  h1 Repositories
+  h1 = t('repositories.index_header')
 
   .p-4.align-items-center.border.shadow.bg-white.rounded-3
-    = link_to 'New repo', new_repository_path, class: 'btn btn-primary'
+    = link_to t('repositories.links.new'), new_repository_path, class: 'btn btn-primary'
 
     table.table.table-hover.mb-5
       thead

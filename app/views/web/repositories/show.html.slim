@@ -2,34 +2,34 @@
   .p-4.align-items-center.border.shadow.bg-white.rounded-3
     .mb-4
       h1 = @repository.name
-    = button_to 'Check repo', repository_checks_path(@repository), method: :post, class: 'btn btn-primary mb-4'
+    = button_to t('repositories.links.check_repository'), repository_checks_path(@repository), method: :post, class: 'btn btn-primary mb-4'
     p
-      strong.me-2 Name
+      strong.me-2 = t('repositories.attributes.name')
       = @repository.name
     p
-      strong.me-2 Language
+      strong.me-2 = t('repositories.attributes.language')
       = @repository.language
     p
-      strong.me-2 Created_at
+      strong.me-2 = t('repositories.attributes.created_at')
       = @repository.created_at
     p
-      strong.me-2 Updated_at
+      strong.me-2 = t('repositories.attributes.updated_at')
       = @repository.updated_at
     hr
     table.table.table-striped
       thead
         tr
           th = ''
-          th = t('checks.table.head.status')
-          th = t('checks.table.head.commit_id')
-          th = t('checks.table.head.is_successful')
-          th = t('checks.table.head.created_at')
+          th = t('checks.show.table.head.status')
+          th = t('checks.show.table.head.commit_id')
+          th = t('checks.show.table.head.is_successful')
+          th = t('checks.show.table.head.created_at')
       tbody
         - @checks&.each do |check|
           tr
             td = link_to check.id, repository_check_path(@repository, check)
-            td = check.status
+            td = check.aasm.human_state
             td = link_to(check.commit_id[0..6], @repository_data[:html_url] + "/tree/#{check.commit_id}")
-            td = check.linter_result&.empty? || false
+            td = t(check.linter_result&.empty? || false)
             td = check.created_at
-    = button_to 'Remove repo', repository_path(@repository), method: :delete, class: 'btn btn-danger mb-4', data: { turbo_confirm: 'Are you sure?' }
+    = button_to t('repositories.links.destroy'), repository_path(@repository), method: :delete, class: 'btn btn-danger mb-4', data: { turbo_confirm: t('repositories.destroy.confirm') }

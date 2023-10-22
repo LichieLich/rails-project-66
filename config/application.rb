@@ -26,5 +26,7 @@ module RailsProject66
     end
 
     routes.default_url_options = { host: ENV.fetch('BASE_URL', nil) }
+
+    config.i18n.default_locale = :ru
   end
 end

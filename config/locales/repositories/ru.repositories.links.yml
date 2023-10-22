@@ -1,0 +1,10 @@
+ru:
+  repositories:
+    links:
+      back_to_repository: Вернуться к репозиторию
+      back_to_repositories: Вернуться к репозиториям
+      check_repository: Начать проверку
+      destroy: Удалить репозиторий
+      new: Подключить репозиторий
+      save: Сохранить
+      show_repository: Показать репозиторий

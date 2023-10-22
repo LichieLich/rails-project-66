@@ -1,0 +1,16 @@
+ru:
+  checks:
+    show:
+      table:
+        head:
+          commit_id: Последний коммит
+          created_at: Создана
+          is_successful: Проверка успешна?
+          status: Статус
+          warn_count: Количество замечаний
+      results:
+        table:
+          head:
+            message: Ошибка
+            place: Место
+            rule_id: Правило

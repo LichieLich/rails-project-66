@@ -1,0 +1,15 @@
+ru:
+  repositories:
+    attributes:
+      created_at: Создан
+      language: Язык
+      name: Имя
+      updated_at: Обновлён
+    index_header: Репозитории
+    new_header: Подключение репозитория
+    create:
+      success: Репозиторий успешно подключен
+    destroy:
+      confirm: Вы уверены, что хотите удалить репозиторий?
+      success: Репозиторий успешно удалён
+    

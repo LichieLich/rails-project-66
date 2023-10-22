@@ -1,0 +1,8 @@
+ru:
+  navigation:
+    hello: 'Добро пожаловать, %{user_name}'
+    links:
+      home: На главную
+      log_in: Войти
+      log_out: Выйти
+      repositories: Репозитории

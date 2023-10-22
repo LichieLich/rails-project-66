@@ -8,13 +8,13 @@ class Check < ApplicationRecord
   # attribute :linter_result, default: -> { 'No checks yet' }
 
   aasm whiny_transitions: false, column: :status do
-    state :not_checked, initial: true, display: 'Not checked'
-    state :getting_repository_data, display: 'get rp data'
-    state :cloning_repository, display: 'cloning'
-    state :linter_in_progress, display: 'linter ip'
-    state :finished, display: 'Checked'
-    state :failed_clone, display: 'failed cloning'
-    state :failed_get_repository, display: 'failed get repo'
+    state :not_checked, initial: true
+    state :getting_repository_data
+    state :finish_cloning_repository
+    state :linter_in_progress
+    state :finished
+    state :failed_clone
+    state :failed_get_repository
 
     event :start_check do
       transitions from: :not_checked, to: :getting_repository_data

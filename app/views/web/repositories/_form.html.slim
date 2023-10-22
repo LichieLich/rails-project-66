@@ -1,7 +1,7 @@
 = simple_form_for @repository do |f|
   - if @repository.errors.any?
     div style='color: red'
-      h2 = "#{pluralize(@repository.errors.count, 'error')} prohibited this repository from being saved:"
+      h2 = t('repositories.errors.create', count: pluralize(@repository.errors.count, 'error'))
       ul
         - @repository.errors.each do |error|
           li = error.full_message
@@ -11,4 +11,4 @@
     = f.input :repository_github_id, collection: @repositories
 
   div
-    = f.submit 'Savee'
+    = f.submit t('repositories.links.save')

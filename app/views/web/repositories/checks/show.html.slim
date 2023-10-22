@@ -1,30 +1,30 @@
 .container
   .p-4.align-items-center.border.shadow.bg-white.rounded-3
-    = link_to 'Go to repo', repository_path(@repository), class: 'btn btn-primary mb-4'
-    h1 = "Check ##{@check.id}"
+    = link_to t('repositories.links.back_to_repository'), repository_path(@repository), class: 'btn btn-primary mb-4'
+    h1 = t('checks.header', id: @check.id)
     table.table
       tbody
         tr
-          td = t('checks.table.head.created_at')
+          td = t('checks.show.table.head.created_at')
           td = @check.created_at
         tr
-          td = t('checks.table.head.status')
-          td = @check.status
+          td = t('checks.show.table.head.status')
+          td = @check.aasm.human_state
         tr
-          td = t('checks.table.head.is_successful')
-          td = @check.linter_result&.empty? || false
+          td = t('checks.show.table.head.is_successful')
+          td = t(@check.linter_result&.empty? || false)
         tr
-          td = t('checks.table.head.warn_count')
+          td = t('checks.show.table.head.warn_count')
           = render partial: "web/repositories/checks/#{@repository.language}/error_count", locals: { errors: @errors }
         tr
-          td = t('checks.table.head.commit_id')
+          td = t('checks.show.table.head.commit_id')
           td = link_to(@check.commit_id[0..6], @repository_data[:html_url] + "/tree/#{@check.commit_id}")
     table.table.table-hover.mb-5
       / TODO: Need cache
       thead
         tr
-          th = t('checks.results.table.head.message')
-          th = t('checks.results.table.head.rule_id')
-          th = t('checks.results.table.head.place')
+          th = t('checks.show.results.table.head.message')
+          th = t('checks.show.results.table.head.rule_id')
+          th = t('checks.show.results.table.head.place')
       tbody
         = render partial: "web/repositories/checks/#{@repository.language}/table", locals: { errors: @errors, repository_data: @repository_data, check: @check }

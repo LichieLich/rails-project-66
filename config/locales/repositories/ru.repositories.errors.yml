@@ -1,0 +1,4 @@
+ru:
+  repositories:
+    errors:
+      ceate: '%{count} ошибок мешают сохранить репозиторий:'

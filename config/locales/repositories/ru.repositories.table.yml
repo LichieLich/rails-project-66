@@ -1,0 +1,7 @@
+ru:
+  repositories:
+    table:
+      head:
+        language: Язык программирования
+        name: Имя
+        status: Статус проверки

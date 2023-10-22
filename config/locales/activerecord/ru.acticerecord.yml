@@ -1,0 +1,16 @@
+ru:
+  activerecord:
+    models:
+      repository: репозиторий
+    attributes:
+      check:
+        status:
+          not_checked: Проверки не апускались
+          getting_repository_data: Получаем данные о репозитории
+          cloning_repository: Клонируем репозиторий
+          linter_in_progress: Выполняем проверку
+          finished: Проверка завершена
+          failed_clone: Не удалось клонировать репозиторий
+          failed_get_repository: Не удалось получить данные о репозитории
+      repository:
+        repository_github_id: Репозиторий в GitHub
