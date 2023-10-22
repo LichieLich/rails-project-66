@@ -2,7 +2,7 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    before_action :set_repository, only: %i[show edit update destroy]
+    before_action :set_repository, only: %i[show edit destroy]
     before_action only: %i[index new create] do
       authorize Repository
     end
@@ -45,20 +45,9 @@ module Web
       github_repository_api.enable_webhook(current_user, repository_data.full_name)
 
       if @repository.save
-        redirect_to repository_url(@repository), notice: 'Repository was successfully created.'
+        redirect_to repository_url(@repository), notice: t('repositories.create.success')
       else
         render :new, status: :unprocessable_entity
-      end
-    end
-
-    # PATCH/PUT /repositories/1 or /repositories/1.json
-    def update
-      authorize @repository
-
-      if @repository.update(repository_params)
-        redirect_to repository_url(@repository), notice: 'Repository was successfully updated.'
-      else
-        render :edit, status: :unprocessable_entity
       end
     end
 
@@ -67,8 +56,9 @@ module Web
       authorize @repository
 
       @repository.destroy
+      github_repository_api.delete_webhook(current_user, @repository)
 
-      redirect_to repositories_url, notice: 'Repository was successfully destroyed.'
+      redirect_to repositories_url, notice: t('repositories.destroy.success')
     end
 
     private

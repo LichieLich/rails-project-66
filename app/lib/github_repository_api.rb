@@ -31,4 +31,13 @@ class GithubRepositoryApi
       }
     )
   end
+
+  def self.delete_webhook(user, repository)
+    # r = get_repository(user, repository.repository_github_id)
+    hooks = client(user).hooks(repository.repository_github_id)
+    # binding.irb
+    webhook = hooks.select { |r| r[:config][:url] == "https://#{ENV['BASE_URL']}/api/checks" }
+    # binding.irb
+    client(user).remove_hook(repository.repository_github_id, webhook.first[:id])
+  end
 end
