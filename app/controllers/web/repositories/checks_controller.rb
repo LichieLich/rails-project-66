@@ -37,9 +37,9 @@ module Web::Repositories
         # TODO: Добавить возможность отписки
         @check.finish_check!
         send_complete_notification(current_user, @check)
-        redirect_to repository_url(@repository), notice: 'Check started'
+        redirect_to repository_url(@repository), notice: t('check.create.success')
       else
-        redirect_to repository_url(@repository), notice: 'Check not started'
+        redirect_to repository_url(@repository), notice: t('check.create.failure')
       end
     end
 

@@ -1,3 +1,6 @@
 ru:
   checks:
     header: 'Проверка #%{id}'
+    create:
+      failure: Проверка не сохранена
+      success: Проверка успешно выполнена
