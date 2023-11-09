@@ -11,6 +11,7 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show test' do
+    p ENV.fetch('BASE_URL', nil)
     get repository_check_url(@repository, @check)
     assert_response :success
   end
