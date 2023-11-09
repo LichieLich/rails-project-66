@@ -4,6 +4,8 @@ require 'test_helper'
 
 class ChecksControllerTest < ActionDispatch::IntegrationTest
   setup do
+    p '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+    p ENV.fetch('BASE_URL', nil)
     @repository = repositories(:one)
     @check = checks(:one)
     @user = users(:one)
@@ -11,7 +13,7 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show test' do
-    p ENV.fetch('BASE_URL', nil)
+    
     get repository_check_url(@repository, @check)
     assert_response :success
   end
