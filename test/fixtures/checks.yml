@@ -7,7 +7,7 @@ one:
   repository: one
 
 two:
-  status: not_checked
+  status: finished
   commit_id: MyString
   linter_result: '{}'
-  repository: two
+  repository: one

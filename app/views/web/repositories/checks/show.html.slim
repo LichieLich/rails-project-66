@@ -18,7 +18,7 @@
           = render partial: "web/repositories/checks/#{@repository.language}/error_count", locals: { errors: @errors }
         tr
           td = t('checks.show.table.head.commit_id')
-          td = link_to(@check.commit_id[0..6], @repository_data[:html_url] + "/tree/#{@check.commit_id}")
+          td = link_to(@check.commit_id[0..6], "#{@repository_data[:html_url]}/tree/#{@check.commit_id}")
     table.table.table-hover.mb-5
       / TODO: Need cache
       thead

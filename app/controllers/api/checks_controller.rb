@@ -8,6 +8,7 @@ module Api
 
     def create
       payload = JSON.parse params[:payload]
+      binding.irb
 
       unless payload['commits']
         logger.info "Recieved a non push event by #{payload['hook_id']}"
