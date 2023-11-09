@@ -3,11 +3,11 @@
 one:
   status: not_checked
   commit_id: MyString
-  linter_result: MyString
+  linter_result: '{}'
   repository: one
 
 two:
   status: not_checked
   commit_id: MyString
-  linter_result: MyString
+  linter_result: '{}'
   repository: two

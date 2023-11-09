@@ -31,7 +31,7 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert { created_repository }
-    assert_redirected_to repository_url(Repository.last)
+    assert_redirected_to repository_url(created_repository)
   end
 
   test 'should show repository' do
