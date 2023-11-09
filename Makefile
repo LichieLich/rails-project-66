@@ -5,7 +5,7 @@ ci-setup:
 	yarn install
 	yarn build:css;
 	bundle exec rake db:migrate;
-	npm init @eslint/config
+	npm install --save-dev eslint
 
 setup:
 	bin/setup
