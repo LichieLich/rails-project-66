@@ -7,6 +7,15 @@ ci-setup:
 	bundle exec rake db:migrate;
 	npm install --save-dev eslint
 
+gitlab-setup:
+	yarn install
+	yarn build
+	yarn build:css
+	RAILS_ENV=test bundle install --without production development
+	chmod u+x bin/rails
+ 	bin/rails db:prepare
+	bin/rails assets:precompile
+
 setup:
 	bin/setup
 	bin/rails db:fixtures:load

@@ -40,7 +40,7 @@ jobs:
           bundler-cache: true
 
       - name: Setup
-        run: make ci-setup
+        run: make gitlab-setup
 
       - name: Code linter check
         run: make lint-code
