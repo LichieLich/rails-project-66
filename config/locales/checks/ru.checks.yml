@@ -1,5 +1,5 @@
 ru:
-  checks:
+  check:
     header: 'Проверка #%{id}'
     create:
       failure: Проверка не сохранена
