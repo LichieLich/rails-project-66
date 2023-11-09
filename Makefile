@@ -1,17 +1,19 @@
 ci-setup:
+	bundle install;
+	rails assets:clobber;
+	bin/rails assets:precompile;
 	yarn install
-	yarn build
-	yarn build:css
-	RAILS_ENV=test bundle install --without production development
-	chmod u+x bin/rails
- 	bin/rails db:prepare
-	bin/rails assets:precompile
+	yarn build:css;
+	bundle exec rake db:migrate;
+	npm init @eslint/config
 
 setup:
 	bin/setup
 	bin/rails db:fixtures:load
 	npx simple-git-hooks
 	cp .env.example .env
+	yarn install
+	npm init @eslint/config
 
 lint-code:
 	bundle exec rubocop
