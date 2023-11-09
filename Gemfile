@@ -54,6 +54,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'aasm'
+gem 'bundle-only'
 gem 'enumerize'
 gem 'sentry-rails'
 gem 'sentry-ruby'
