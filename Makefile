@@ -1,5 +1,5 @@
 ci-setup:
-	bundle install;
+	RAILS_ENV=production bundle install;
 	rails assets:clobber;
 	bin/rails assets:precompile;
 	yarn install
