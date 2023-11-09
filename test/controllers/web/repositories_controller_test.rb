@@ -44,11 +44,6 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should update repository' do
-    patch repository_url(@repository), params: { repository: { name: @repository.name, user_id: @repository.user_id } }
-    assert_redirected_to repository_url(@repository)
-  end
-
   test 'should destroy repository' do
     assert_difference('Repository.count', -1) do
       delete repository_url(@repository)

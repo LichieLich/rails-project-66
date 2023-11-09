@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  status: MyString
+  status: not_checked
   commit_id: MyString
-  is_successful: false
+  linter_result: MyString
   repository: one
 
 two:
-  status: MyString
+  status: not_checked
   commit_id: MyString
-  is_successful: false
+  linter_result: MyString
   repository: two

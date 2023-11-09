@@ -20,4 +20,6 @@ class GithubRepositoryApiStub
   def self.get_last_commit(_user, _id); end
 
   def self.enable_webhook(_user, _name); end
+
+  def self.delete_webhook(_user, _id); end
 end
