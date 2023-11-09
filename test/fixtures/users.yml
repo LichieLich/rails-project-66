@@ -4,8 +4,10 @@ one:
   email: MyString1
   nickname: MyString1
   token: MyString
+  github_id: 12345678
 
 two:
   email: MyString2
   nickname: MyString2
   token: MyString
+  github_id: 23456789

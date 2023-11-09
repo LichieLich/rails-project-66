@@ -7,7 +7,7 @@ module Api
     skip_before_action :verify_authenticity_token, only: :create
 
     def create
-      payload = JSON.parse params[:payload]
+      payload = JSON.parse request.body.read
 
       unless payload['commits']
         logger.info "Recieved a non push event by #{payload['hook_id']}"
@@ -33,7 +33,7 @@ module Api
       @check.linter_result = repository_checker.perform_check(@check, repository_data)
       @check.finish_check! if @check.save
 
-      send_complete_notification(current_user, @check)
+      send_complete_notification(user, @check)
     end
 
     private
