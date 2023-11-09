@@ -21,11 +21,12 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: <%= ENV.fetch("PGDATABASE", nil) %>
-  pool: 5
-  username: <%= ENV.fetch("PGUSER", nil) %>
-  password: <%= ENV.fetch("PGPASSWORD", nil) %>
-  port: <%= ENV.fetch("PGPORT", nil) %>
-  host: <%= ENV.fetch("PGDATABASE", nil) %>
+  url: <%= ENV.fetch("PGDATABASE", nil) %>
+  # adapter: postgresql
+  # encoding: unicode
+  # database: <%= ENV.fetch("PGDATABASE", nil) %>
+  # pool: 5
+  # username: <%= ENV.fetch("PGUSER", nil) %>
+  # password: <%= ENV.fetch("PGPASSWORD", nil) %>
+  # port: <%= ENV.fetch("PGPORT", nil) %>
+  # host: <%= ENV.fetch("PGDATABASE", nil) %>
