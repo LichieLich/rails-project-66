@@ -23,7 +23,7 @@ class GithubRepositoryApi
       'web',
       {
         url: "https://#{ENV.fetch('BASE_URL', nil)}/api/checks",
-        content_type: 'application/json'
+        content_type: 'x-www-form-urlencoded'
       },
       {
         events: ['push'],
