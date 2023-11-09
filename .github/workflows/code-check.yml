@@ -5,6 +5,7 @@ env:
   PGUSER: notused
   PGPASSWORD: notused
   PGPORT: notused
+  BASE_URL: github.com/LichieLich/rails-project-66
 
 on:
   pull_request:
