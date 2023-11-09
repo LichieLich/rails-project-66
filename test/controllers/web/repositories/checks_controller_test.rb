@@ -13,7 +13,6 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show test' do
-    
     get repository_check_url(@repository, @check)
     assert_response :success
   end
