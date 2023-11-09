@@ -11,8 +11,11 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create check' do
+    mocked_event = load_fixture('files/mocked_push_event.json')
+
+
     assert_difference('Check.count', 1) do
-      post repository_checks_url(@repository)
+      post api_checks_url(payload: mocked_event)
     end
   end
 end
