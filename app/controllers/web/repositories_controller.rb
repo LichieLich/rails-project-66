@@ -16,6 +16,8 @@ module Web
 
       logger.info '!!!!!------------!!!!!!'
       logger.info Rails.env
+      # TODO: Почему сквозные айдишники для чеков?? Надо порядковый номер отображать
+      # TODO: Фильтровать по убыванию
 
       @checks = @repository.checks
       @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)

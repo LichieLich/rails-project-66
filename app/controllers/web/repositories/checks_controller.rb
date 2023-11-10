@@ -18,7 +18,7 @@ module Web::Repositories
 
     def create
       # TODO: Закинуть длинные вещи в бэкграунд. Тут или внутри класса
-      # TODO: Почему сквозные айдишники для чеков??
+      # TODO: BashRUnner не рабоатет на проде
       authorize Check
 
       @check = @repository.checks.build(check_params)
