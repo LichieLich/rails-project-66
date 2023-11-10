@@ -17,6 +17,7 @@ module Web::Repositories
     end
 
     def create
+      # TODO: Закинуть длинные вещи в бэкграунд. Тут или внутри класса
       authorize Check
 
       @check = @repository.checks.build(check_params)
@@ -32,6 +33,8 @@ module Web::Repositories
 
       @check.got_repository_data!
       @check.linter_result = repository_checker.perform_check(@check, repository_data)
+      logger.info '!!!!!------------!!!!!!'
+      logger.info @check.linter_result
 
       if @check.save
         # TODO: Добавить возможность отписки
