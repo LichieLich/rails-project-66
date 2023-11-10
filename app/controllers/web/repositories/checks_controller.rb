@@ -34,9 +34,6 @@ module Web::Repositories
 
       @check.got_repository_data!
       @check.linter_result = repository_checker.perform_check(@check, repository_data)
-      logger.info '!!!!!------------!!!!!!'
-      logger.info Rails.env
-      logger.info @check.linter_result
 
       if @check.save
         # TODO: Добавить возможность отписки
