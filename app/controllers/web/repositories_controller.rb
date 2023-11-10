@@ -14,6 +14,9 @@ module Web
     def show
       authorize @repository
 
+      logger.info '!!!!!------------!!!!!!'
+      logger.info Rails.env
+
       @checks = @repository.checks
       @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
     end
