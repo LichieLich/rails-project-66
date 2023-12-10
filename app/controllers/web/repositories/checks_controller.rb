@@ -15,14 +15,12 @@ module Web::Repositories
         return
       end
 
+      # TODO: Сделать паджинатор
       @errors = JSON.parse(@check.linter_result)
       @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
     end
 
     def create
-      "asdsa"
-      # TODO: Закинуть длинные вещи в бэкграунд. Тут или внутри класса
-      # TODO: BashRUnner не рабоатет на проде
       authorize Check
 
       @check = @repository.checks.build(check_params)
@@ -32,7 +30,6 @@ module Web::Repositories
       repository_checker.perform_later(current_user, @check)
 
       if @check.save
-        # TODO: Добавить возможность отписки
         send_complete_notification(current_user, @check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else

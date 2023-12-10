@@ -14,25 +14,25 @@ module Web
     def show
       authorize @repository
 
-      # TODO: Почему сквозные айдишники для чеков?? Надо порядковый номер отображать
-      # TODO: Фильтровать по убыванию
       # TODO: автообновление таблицы при изменении статуса
-
-      @checks = @repository.checks
+      @checks = @repository.checks.order(created_at: :desc)
       @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
     end
 
     def new
       @repository = Repository.new
-      @repositories = github_repository_api.user_repositories(current_user)
-      # TODO: Убрать из списка уже добавленные репы
+      @repositories = github_repository_api.user_repositories(current_user).reject do |repo|
+        Repository.find_by(repository_github_id: repo.id) || !Repository.language.values.include?(repo.language&.downcase)
+      end
     end
 
     def edit
       authorize @repository
+      # TODO: Добавить возможность отписки
     end
 
     def create
+      # TODO: Добавить возможность не подписываться на уведомления по почте
       repository_data = github_repository_api.get_repository(current_user, params[:repository][:repository_github_id])
       @repository = current_user.repositories.build(
         repository_github_id: repository_data.id,
