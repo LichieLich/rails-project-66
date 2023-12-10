@@ -19,7 +19,7 @@ module Api
       @check = @repository.checks.build
       @check.commit_id = payload['head_commit']['id']
       @check.start_check!
-      repository_checker.perform_later(current_user, @check)
+      repository_checker.perform_later(user, @check)
       @check.save
     end
 

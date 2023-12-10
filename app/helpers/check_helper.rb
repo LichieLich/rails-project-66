@@ -10,7 +10,7 @@ module CheckHelper
 
   def check_has_no_problems?(check)
     return false unless check.linter_result
-    
+
     (check.linter_result[/offense_count":[^0]/] || check.linter_result[/errorCount":[^0]/] ||
       check.linter_result[/warningCount":[^0]/] || check.linter_result[/fixableErrorCount":[^0]/] ||
       check.linter_result[/fixableWarningCount":[^0]/]).nil?
