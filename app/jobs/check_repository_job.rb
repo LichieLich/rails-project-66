@@ -3,6 +3,8 @@
 class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
+  include CheckHelper
+
   def perform(user, check)
     begin
       repository_data = github_repository_api.get_repository(user, check.repository.repository_github_id)
@@ -35,6 +37,7 @@ class CheckRepositoryJob < ApplicationJob
     end
 
     check.finish_check!
+    send_complete_notification(user, @check)
   end
 
   def github_repository_api

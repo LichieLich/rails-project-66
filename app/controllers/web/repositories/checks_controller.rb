@@ -2,7 +2,6 @@
 
 module Web::Repositories
   class ChecksController < ApplicationController
-    include CheckHelper
     before_action :set_repository, only: %i[create show]
 
     def show
@@ -30,7 +29,6 @@ module Web::Repositories
       repository_checker.perform_later(current_user, @check)
 
       if @check.save
-        send_complete_notification(current_user, @check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else
         redirect_to repository_url(@repository), notice: t('check.create.failure')

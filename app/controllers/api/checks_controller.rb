@@ -2,7 +2,6 @@
 
 module Api
   class ChecksController < ApplicationController
-    include CheckHelper
     # TODO: Вернуть проверку на CSRF
     skip_before_action :verify_authenticity_token, only: :create
 
@@ -30,10 +29,8 @@ module Api
       end
 
       @check.got_repository_data!
-      @check.linter_result = repository_checker.perform_check(@check, repository_data)
-      @check.finish_check! if @check.save
-
-      send_complete_notification(user, @check)
+      repository_checker.perform_later(current_user, @check)
+      @check.save
     end
 
     private
