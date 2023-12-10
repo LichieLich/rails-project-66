@@ -12,7 +12,7 @@
           td = @check.aasm.human_state
         tr
           td = t('checks.show.table.head.is_successful')
-          td = t(@check.linter_result&.empty? || false)
+          td = t(check_has_no_problems?(@check))
         tr
           td = t('checks.show.table.head.warn_count')
           = render partial: "web/repositories/checks/#{@repository.language}/error_count", locals: { errors: @errors }
@@ -20,7 +20,6 @@
           td = t('checks.show.table.head.commit_id')
           td = link_to(@check.commit_id[0..6], "#{@repository_data[:html_url]}/tree/#{@check.commit_id}")
     table.table.table-hover.mb-5
-      / TODO: Need cache
       thead
         tr
           th = t('checks.show.results.table.head.message')

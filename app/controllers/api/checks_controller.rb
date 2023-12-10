@@ -18,17 +18,7 @@ module Api
 
       @check = @repository.checks.build
       @check.commit_id = payload['head_commit']['id']
-
       @check.start_check!
-
-      begin
-        repository_data = github_repository_api.get_repository(user, @repository.repository_github_id)
-      rescue StandardError => e
-        @check.fail_get_repository!
-        raise e
-      end
-
-      @check.got_repository_data!
       repository_checker.perform_later(current_user, @check)
       @check.save
     end

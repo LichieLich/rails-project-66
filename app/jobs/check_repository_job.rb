@@ -22,6 +22,7 @@ class CheckRepositoryJob < ApplicationJob
       BashRunner.run("git clone #{repository_data.clone_url} #{repository_directory}")
     rescue StandardError => e
       check.fail_clone!
+      send_complete_notification(user, check)
       raise e
     end
 
@@ -33,11 +34,12 @@ class CheckRepositoryJob < ApplicationJob
     when 'ruby'
       check.linter_result = BashRunner.run("rubocop #{repository_directory} --format json")
     else
+      send_complete_notification(user, check)
       raise "#{repository_data.language} не поддерживается"
     end
 
     check.finish_check!
-    send_complete_notification(user, @check)
+    send_complete_notification(user, check) unless check_has_no_problems?(check)
   end
 
   def github_repository_api
