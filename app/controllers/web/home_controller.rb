@@ -2,8 +2,6 @@
 
 module Web
   class HomeController < ApplicationController
-    def index
-      @bash = BashRunner.run('echo 12312312')
-    end
+    def index; end
   end
 end

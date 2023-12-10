@@ -10,13 +10,17 @@ module Web::Repositories
 
       authorize @check
 
+      unless @check.finished?
+        redirect_to repository_url(@repository), notice: t('check.create.unprepared')
+        return
+      end
+
       @errors = JSON.parse(@check.linter_result)
       @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
-
-      redirect_to repository_url(@repository) unless @check.finished?
     end
 
     def create
+      "asdsa"
       # TODO: Закинуть длинные вещи в бэкграунд. Тут или внутри класса
       # TODO: BashRUnner не рабоатет на проде
       authorize Check
@@ -25,19 +29,10 @@ module Web::Repositories
       @check.commit_id = github_repository_api.get_last_commit(current_user, @repository.repository_github_id)
       @check.start_check!
 
-      begin
-        repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
-      rescue StandardError => e
-        @check.fail_get_repository!
-        raise e
-      end
-
-      @check.got_repository_data!
-      @check.linter_result = repository_checker.perform_check(@check, repository_data)
+      repository_checker.perform_later(current_user, @check)
 
       if @check.save
         # TODO: Добавить возможность отписки
-        @check.finish_check!
         send_complete_notification(current_user, @check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else
