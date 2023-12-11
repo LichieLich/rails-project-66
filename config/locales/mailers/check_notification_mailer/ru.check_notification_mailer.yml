@@ -1,6 +1,6 @@
 ru:
   check_notification_mailer:
     check_notification:
-    notification: Пройдите по ссылке для просмотра отчёта по проверке.
+      notification: Пройдите по ссылке для просмотра отчёта по проверке.
       subject: 'Обнаружены проблемы с репозиторием %{repository_name}'
       warning: '%{username}, в последней проверке вашего репозитория обнаружены пробелемы.'
