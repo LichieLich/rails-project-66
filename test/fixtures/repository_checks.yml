@@ -5,13 +5,9 @@ one:
   commit_id: MyString
   linter_result: '{}'
   repository: one
-  created_at: 123
-  updated_at: 123
 
 two:
   aasm_state: finished
   commit_id: MyString
   linter_result: '{}'
   repository: one
-  created_at: 123
-  updated_at: 123
