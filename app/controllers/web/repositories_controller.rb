@@ -21,7 +21,7 @@ module Web
 
     def new
       @repository = Repository.new
-      @repositories = github_repository_api.user_repositories(current_user).reject do |repo|
+      @repositories = github_repository_api.user_repositories(current_user)&.reject do |repo|
         Repository.find_by(repository_github_id: repo.id) || Repository.language.values.exclude?(repo.language&.downcase)
       end
     end
