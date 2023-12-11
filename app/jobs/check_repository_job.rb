@@ -7,7 +7,7 @@ class CheckRepositoryJob < ApplicationJob
 
   def perform(user, check)
     begin
-      repository_data = github_repository_api.get_repository(user, check.repository.repository_github_id)
+      repository_data = github_repository_api.get_repository(user, check.repository.github_id)
     rescue StandardError => e
       check.fail_get_repository!
       raise e

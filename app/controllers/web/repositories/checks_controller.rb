@@ -16,14 +16,14 @@ module Web::Repositories
 
       # TODO: Сделать паджинатор
       @errors = JSON.parse(@check.linter_result)
-      @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
+      @repository_data = github_repository_api.get_repository(current_user, @repository.github_id)
     end
 
     def create
       authorize Check
 
       @check = @repository.checks.build(check_params)
-      @check.commit_id = github_repository_api.get_last_commit(current_user, @repository.repository_github_id)
+      @check.commit_id = github_repository_api.get_last_commit(current_user, @repository.github_id)
       @check.start_check!
 
       repository_checker.perform_later(current_user, @check)

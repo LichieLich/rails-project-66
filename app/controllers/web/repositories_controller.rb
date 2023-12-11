@@ -16,13 +16,13 @@ module Web
 
       # TODO: автообновление таблицы при изменении статуса
       @checks = @repository.checks.order(created_at: :desc)
-      @repository_data = github_repository_api.get_repository(current_user, @repository.repository_github_id)
+      @repository_data = github_repository_api.get_repository(current_user, @repository.github_id)
     end
 
     def new
       @repository = Repository.new
       @repositories = github_repository_api.user_repositories(current_user)&.reject do |repo|
-        Repository.find_by(repository_github_id: repo.id) || Repository.language.values.exclude?(repo.language&.downcase)
+        Repository.find_by(github_id: repo.id) || Repository.language.values.exclude?(repo.language&.downcase)
       end
     end
 
@@ -33,10 +33,11 @@ module Web
 
     def create
       # TODO: Добавить возможность не подписываться на уведомления по почте
-      repository_data = github_repository_api.get_repository(current_user, params[:repository][:repository_github_id])
+      repository_data = github_repository_api.get_repository(current_user, params[:repository][:github_id])
       @repository = current_user.repositories.build(
-        repository_github_id: repository_data.id,
+        github_id: repository_data.id,
         name: repository_data.name,
+        full_name: repository_data.full_name,
         language: repository_data.language&.downcase
       )
 
@@ -53,7 +54,7 @@ module Web
       authorize @repository
 
       @repository.destroy
-      github_repository_api.delete_webhook(current_user, @repository.repository_github_id)
+      github_repository_api.delete_webhook(current_user, @repository.github_id)
 
       redirect_to repositories_url, notice: t('repositories.destroy.success')
     end
@@ -65,7 +66,7 @@ module Web
     end
 
     def repository_params
-      params.require(:repository).permit(:repository_github_id, :language, :name, :user_id)
+      params.require(:repository).permit(:github_id, :language, :name, :user_id)
     end
 
     def github_repository_api

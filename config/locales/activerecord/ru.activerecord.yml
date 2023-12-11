@@ -13,4 +13,4 @@ ru:
           failed_clone: Не удалось клонировать репозиторий
           failed_get_repository: Не удалось получить данные о репозитории
       repository:
-        repository_github_id: Репозиторий в GitHub
+        github_id: Репозиторий в GitHub

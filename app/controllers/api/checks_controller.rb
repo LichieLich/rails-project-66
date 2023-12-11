@@ -13,7 +13,7 @@ module Api
         return
       end
 
-      @repository = Repository.find_by!(repository_github_id: payload['repository']['id'])
+      @repository = Repository.find_by!(github_id: payload['repository']['id'])
       user = User.find_by!(github_id: payload['sender']['id'])
 
       @check = @repository.checks.build

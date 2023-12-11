@@ -23,7 +23,7 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     response_body = load_fixture('files/mocked_repository.json')
     mocked_json_response = JSON.parse(response_body)
 
-    post repositories_path(repository: { repository_github_id: mocked_json_response['id'] })
+    post repositories_path(repository: { github_id: mocked_json_response['id'] })
 
     created_repository = Repository.find_by!(
       name: mocked_json_response['name'],

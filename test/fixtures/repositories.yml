@@ -4,10 +4,10 @@ one:
   name: MyString
   user: one
   language: javascript
-  repository_github_id: 123456
+  github_id: 123456
 
 two:
   name: MyString
   user: two
   language: ruby
-  repository_github_id: 1234567
+  github_id: 1234567
