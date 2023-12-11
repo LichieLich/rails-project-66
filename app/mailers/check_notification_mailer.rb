@@ -5,6 +5,6 @@ class CheckNotificationMailer < ApplicationMailer
     @user = params[:user]
     @check = params[:check]
 
-    mail(to: @user.email, subject: t('.subject'))
+    mail(to: @user.email, subject: t('.subject', repository_name: @check.repository.name))
   end
 end
