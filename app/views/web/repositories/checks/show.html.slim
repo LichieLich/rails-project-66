@@ -8,7 +8,7 @@
           td = t('checks.show.table.head.created_at')
           td = @check.created_at
         tr
-          td = t('checks.show.table.head.status')
+          td = t('checks.show.table.head.aasm_state')
           td = @check.aasm.human_state
         tr
           td = t('checks.show.table.head.is_successful')

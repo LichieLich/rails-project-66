@@ -3,10 +3,10 @@ ru:
     show:
       table:
         head:
+          aasm_state: Статус
           commit_id: Последний коммит
           created_at: Создана
           is_successful: Проверка успешна?
-          aasm_state: Статус
           warn_count: Количество замечаний
       results:
         table:

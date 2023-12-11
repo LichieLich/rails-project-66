@@ -3,9 +3,9 @@ ru:
     models:
       repository: репозиторий
     attributes:
-      check:
+      repository_check:
         aasm_state:
-          not_checked: Проверки не апускались
+          not_checked: Проверки не запускались
           getting_repository_data: Получаем данные о репозитории
           cloning_repository: Клонируем репозиторий
           linter_in_progress: Выполняем проверку
