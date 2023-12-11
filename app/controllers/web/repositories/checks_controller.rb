@@ -5,7 +5,7 @@ module Web::Repositories
     before_action :set_repository, only: %i[create show]
 
     def show
-      @check = @repository.checks.find_by(id: params[:id])
+      @check = @repository.repository_checks.find_by(id: params[:id])
 
       authorize @check
 
@@ -20,9 +20,9 @@ module Web::Repositories
     end
 
     def create
-      authorize Check
+      authorize RepositoryCheck
 
-      @check = @repository.checks.build(check_params)
+      @check = @repository.repository_checks.build(check_params)
       @check.commit_id = github_repository_api.get_last_commit(current_user, @repository.github_id)
       @check.start_check!
 

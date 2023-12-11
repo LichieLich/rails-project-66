@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-class Check < ApplicationRecord
+class RepositoryCheck < ApplicationRecord
   include AASM
 
   belongs_to :repository
-
-  # attribute :linter_result, default: -> { 'No checks yet' }
 
   aasm whiny_transitions: false, column: :status do
     state :not_checked, initial: true

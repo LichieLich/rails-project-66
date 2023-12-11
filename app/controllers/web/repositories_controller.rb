@@ -15,7 +15,7 @@ module Web
       authorize @repository
 
       # TODO: автообновление таблицы при изменении статуса
-      @checks = @repository.checks.order(created_at: :desc)
+      @checks = @repository.repository_checks.order(created_at: :desc)
       @repository_data = github_repository_api.get_repository(current_user, @repository.github_id)
     end
 
