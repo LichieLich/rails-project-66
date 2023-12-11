@@ -16,4 +16,4 @@
           tr
             td = link_to repository.name, repository
             td = repository.language
-            td = repository.repository_checks.last&.status || false
+            td = repository.repository_checks.last&.aasm_state || false

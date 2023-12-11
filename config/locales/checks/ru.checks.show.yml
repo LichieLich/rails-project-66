@@ -6,7 +6,7 @@ ru:
           commit_id: Последний коммит
           created_at: Создана
           is_successful: Проверка успешна?
-          status: Статус
+          aasm_state: Статус
           warn_count: Количество замечаний
       results:
         table:

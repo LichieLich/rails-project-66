@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  status: not_checked
+  aasm_state: not_checked
   commit_id: MyString
   linter_result: '{}'
   repository: one
 
 two:
-  status: finished
+  aasm_state: finished
   commit_id: MyString
   linter_result: '{}'
   repository: one

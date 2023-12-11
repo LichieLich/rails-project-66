@@ -4,7 +4,7 @@ ru:
       repository: репозиторий
     attributes:
       check:
-        status:
+        aasm_state:
           not_checked: Проверки не апускались
           getting_repository_data: Получаем данные о репозитории
           cloning_repository: Клонируем репозиторий

@@ -5,7 +5,7 @@ class RepositoryCheck < ApplicationRecord
 
   belongs_to :repository
 
-  aasm whiny_transitions: false, column: :status do
+  aasm whiny_transitions: false, column: :aasm_state do
     state :not_checked, initial: true
     state :getting_repository_data
     state :cloning_repository

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_11_171622) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_11_185139) do
   create_table "repositories", force: :cascade do |t|
     t.string "name"
     t.string "language"
@@ -23,12 +23,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_11_171622) do
   end
 
   create_table "repository_checks", force: :cascade do |t|
-    t.string "status"
+    t.string "aasm_state"
     t.string "commit_id"
     t.text "linter_result"
     t.integer "repository_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "repository"
+    t.boolean "passed"
     t.index ["repository_id"], name: "index_repository_checks_on_repository_id"
   end
 
