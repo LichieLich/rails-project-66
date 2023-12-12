@@ -15,7 +15,7 @@ module Web::Repositories
       end
 
       # TODO: Сделать паджинатор
-      @errors = JSON.parse(@check.linter_result)
+      @errors = JSON.parse(@check.linter_result) @check.linter_result
       @repository_data = github_repository_api.get_repository(current_user, @repository.github_id)
     end
 
