@@ -25,5 +25,9 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Repository::Check.count', 1) do
       post repository_checks_url(@repository)
     end
+
+    perform_enqueued_jobs
+
+    assert { Repository::Check.last.finished? }
   end
 end
