@@ -1,4 +1,4 @@
-- errors['files'].each do |error|
+- errors['files']&.each do |error|
   - unless error['offenses'].empty?
     tr
       - relative_path = error['path'].gsub("#{Rails.root}/tmp/repositories/#{repository_data[:name]}", '')

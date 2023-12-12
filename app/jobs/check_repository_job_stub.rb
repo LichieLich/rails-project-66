@@ -7,6 +7,7 @@ class CheckRepositoryJobStub < ApplicationJob
     check.got_repository_data!
     check.finish_cloning_repository!
     check.passed = true
+    check.save
     check.finish_check!
   end
 end
