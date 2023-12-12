@@ -35,6 +35,6 @@ class GithubRepositoryApi
   def self.delete_webhook(user, id)
     hooks = client(user).hooks(id)
     webhook = hooks.select { |r| r[:config][:url] == "https://#{ENV.fetch('BASE_URL', nil)}/api/checks" }
-    client(user).remove_hook(id, webhook.first[:id]) if webhook
+    client(user).remove_hook(id, webhook.first[:id]) unless webhook.first.nil?
   end
 end
