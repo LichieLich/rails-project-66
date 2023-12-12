@@ -19,9 +19,10 @@ module Api
       @check.start_check!
       repository_checker.perform_later(user, @check)
       @check.save
+      # binding.irb
 
       # render status: :ok, json: @controller.to_json
-      render plain: "OK"
+      render json: {}
     end
 
     private

@@ -2,8 +2,9 @@ ru:
   activerecord:
     models:
       repository: репозиторий
+      check: проверка
     attributes:
-      check:
+      repository/check:
         aasm_state:
           not_checked: Проверки не запускались
           getting_repository_data: Получаем данные о репозитории
