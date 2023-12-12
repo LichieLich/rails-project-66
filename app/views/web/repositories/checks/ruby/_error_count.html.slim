@@ -1,4 +1,4 @@
 - count = 0
-- errors['files'].each do |error|
+- errors['files']&.each do |error|
   - count += error['offenses'].count
 td = count

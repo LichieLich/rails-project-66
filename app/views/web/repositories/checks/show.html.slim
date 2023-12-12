@@ -12,7 +12,7 @@
           td = @check.aasm.human_state
         tr
           td = t('checks.show.table.head.is_successful')
-          td = t(check_has_no_problems?(@check))
+          td = t(@check.passed)
         tr
           td = t('checks.show.table.head.warn_count')
           = render partial: "web/repositories/checks/#{@repository.language}/error_count", locals: { errors: @errors }

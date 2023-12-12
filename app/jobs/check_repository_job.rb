@@ -38,6 +38,7 @@ class CheckRepositoryJob < ApplicationJob
       raise "#{repository_data.language} не поддерживается"
     end
 
+    check.passed = check_has_no_problems?(check)
     check.finish_check!
     BashRunner.run("rm -r -f #{repository_directory}")
     send_complete_notification(user, check) unless check_has_no_problems?(check)
