@@ -20,7 +20,8 @@ module Api
       repository_checker.perform_later(user, @check)
       @check.save
 
-      render status: :ok, json: @controller.to_json
+      # render status: :ok, json: @controller.to_json
+      render plain: "OK"
     end
 
     private
