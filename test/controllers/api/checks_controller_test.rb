@@ -19,5 +19,6 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
     perform_enqueued_jobs
 
     assert { Repository::Check.last.finished? }
+    assert { Repository::Check.last.passed }
   end
 end
