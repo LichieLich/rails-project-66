@@ -3,7 +3,7 @@ ru:
     models:
       repository: репозиторий
     attributes:
-      repository_check:
+      check:
         aasm_state:
           not_checked: Проверки не запускались
           getting_repository_data: Получаем данные о репозитории

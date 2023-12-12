@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RepositoryCheckPolicy < ApplicationPolicy
+class Repository::CheckPolicy < ApplicationPolicy
   attr_reader :user, :check
 
   def initialize(user, check)
