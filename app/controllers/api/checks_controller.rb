@@ -6,18 +6,16 @@ module Api
     skip_before_action :verify_authenticity_token, only: :create
 
     def create
-      payload = JSON.parse params[:payload]
-
-      unless payload['commits']
-        logger.info "Recieved a non push event by #{payload['hook_id']}"
+      unless params['commits']
+        logger.info "Recieved a non push event by #{params['hook_id']}"
         return
       end
 
-      @repository = Repository.find_by!(github_id: payload['repository']['id'])
-      user = User.find_by!(github_id: payload['sender']['id'])
+      @repository = Repository.find_by!(github_id: params['repository']['id'])
+      user = User.find_by!(github_id: params['sender']['id'])
 
       @check = @repository.checks.build
-      @check.commit_id = payload['head_commit']['id']
+      @check.commit_id = params['head_commit']['id']
       @check.start_check!
       repository_checker.perform_later(user, @check)
       @check.save
