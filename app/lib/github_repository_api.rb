@@ -23,7 +23,7 @@ class GithubRepositoryApi
       'web',
       {
         url: "https://#{ENV.fetch('BASE_URL', nil)}/api/checks",
-        content_type: 'x-www-form-urlencoded'
+        content_type: 'application/json'
       },
       {
         events: ['push'],
@@ -35,6 +35,6 @@ class GithubRepositoryApi
   def self.delete_webhook(user, id)
     hooks = client(user).hooks(id)
     webhook = hooks.select { |r| r[:config][:url] == "https://#{ENV.fetch('BASE_URL', nil)}/api/checks" }
-    client(user).remove_hook(id, webhook.first[:id])
+    client(user).remove_hook(id, webhook.first[:id]) if webhook
   end
 end
