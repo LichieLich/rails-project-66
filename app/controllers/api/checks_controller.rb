@@ -16,12 +16,11 @@ module Api
       # end
 
       @repository = Repository.find_by!(github_id: payload['repository']['id'])
-      user = User.find_by!(github_id: payload['sender']['id'])
 
       @check = @repository.checks.build
       @check.commit_id = payload['head_commit']['id']
       @check.start_check!
-      repository_checker.perform_later(user, @check)
+      repository_checker.perform_later(@repository.user, @check)
       @check.save
 
       render json: {}
