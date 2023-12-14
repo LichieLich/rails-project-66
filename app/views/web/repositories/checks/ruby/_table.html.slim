@@ -1,8 +1,8 @@
 - errors['files']&.each do |error|
   - unless error['offenses'].empty?
     tr
-      - relative_path = error['path'].gsub("#{Rails.root}/tmp/repositories/#{repository_data[:name]}", '')
-      td(colspan = "4") = link_to(relative_path, repository_data[:html_url] + "/tree/#{check.commit_id}" + relative_path)
+      - relative_path = error['path'].gsub("#{Rails.root}/tmp/repositories/#{check.repository.name}", '')
+      td(colspan = "4") = link_to(relative_path, "https://github.com/#{@repository.full_name}/tree/#{check.commit_id}" + relative_path)
     - error['offenses'].each do |error_message|
       tr
         td = error_message['message']

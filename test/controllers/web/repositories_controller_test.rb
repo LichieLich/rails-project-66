@@ -25,6 +25,8 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
 
     post repositories_path(repository: { github_id: mocked_json_response['id'] })
 
+    perform_enqueued_jobs
+
     created_repository = Repository.find_by!(
       name: mocked_json_response['name'],
       language: mocked_json_response['language']

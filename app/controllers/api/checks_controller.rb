@@ -31,9 +31,5 @@ module Api
     def repository_checker
       ApplicationContainer[:repository_checker]
     end
-
-    def github_repository_api
-      ApplicationContainer[:github_repository_api]
-    end
   end
 end

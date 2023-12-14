@@ -16,7 +16,6 @@ module Web
 
       # TODO: автообновление таблицы при изменении статуса
       @checks = @repository.checks.order(created_at: :desc)
-      @repository_data = github_repository_api.get_repository(current_user, @repository.github_id)
     end
 
     def new
@@ -33,17 +32,11 @@ module Web
 
     def create
       # TODO: Добавить возможность не подписываться на уведомления по почте
-      repository_data = github_repository_api.get_repository(current_user, params[:repository][:github_id])
-      @repository = current_user.repositories.build(
-        github_id: params[:repository][:github_id],
-        name: repository_data.name,
-        full_name: repository_data.full_name,
-        language: repository_data.language&.downcase
-      )
 
-      github_repository_api.enable_webhook(current_user, repository_data.full_name)
+      @repository = current_user.repositories.build(github_id: params[:repository][:github_id])
 
       if @repository.save
+        Github::GetRepositoryJob.perform_later(@repository)
         redirect_to repository_url(@repository), notice: t('repositories.create.success')
       else
         render :new, status: :unprocessable_entity
@@ -53,8 +46,8 @@ module Web
     def destroy
       authorize @repository
 
+      Github::DisableWebhookJob.perform_later(@repository)
       @repository.destroy
-      github_repository_api.delete_webhook(current_user, @repository.github_id)
 
       redirect_to repositories_url, notice: t('repositories.destroy.success')
     end

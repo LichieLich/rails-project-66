@@ -18,7 +18,7 @@
           = render partial: "web/repositories/checks/#{@repository.language}/error_count", locals: { errors: @errors }
         tr
           td = t('checks.show.table.head.commit_id')
-          td = link_to(@check.commit_id[0..6], "#{@repository_data[:html_url]}/tree/#{@check.commit_id}") if @repository_data[:html_url]
+          td = link_to(@check.commit_id[0..6], "https://github.com/#{@repository.full_name}/tree/#{@check.commit_id}") if @check.commit_id
     table.table.table-hover.mb-5
       thead
         tr
@@ -26,4 +26,4 @@
           th = t('checks.show.results.table.head.rule_id')
           th = t('checks.show.results.table.head.place')
       tbody
-        = render partial: "web/repositories/checks/#{@repository.language}/table", locals: { errors: @errors, repository_data: @repository_data, check: @check }
+        = render partial: "web/repositories/checks/#{@repository.language}/table", locals: { errors: @errors, check: @check }

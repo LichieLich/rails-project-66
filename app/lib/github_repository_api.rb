@@ -17,9 +17,9 @@ class GithubRepositoryApi
     client(user).commits(id).first[:sha].to_s
   end
 
-  def self.enable_webhook(user, name)
+  def self.enable_webhook(user, full_name)
     client(user).create_hook(
-      name,
+      full_name,
       'web',
       {
         url: "https://#{ENV.fetch('BASE_URL', nil)}/api/checks",
@@ -32,9 +32,9 @@ class GithubRepositoryApi
     )
   end
 
-  def self.delete_webhook(user, id)
-    hooks = client(user).hooks(id)
+  def self.delete_webhook(user, github_id)
+    hooks = client(user).hooks(github_id)
     webhook = hooks.select { |r| r[:config][:url] == "https://#{ENV.fetch('BASE_URL', nil)}/api/checks" }
-    client(user).remove_hook(id, webhook.first[:id]) unless webhook.first.nil?
+    client(user).remove_hook(github_id, webhook.first[:id]) unless webhook.first.nil?
   end
 end
