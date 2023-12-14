@@ -35,7 +35,7 @@ module Web
       # TODO: Добавить возможность не подписываться на уведомления по почте
       repository_data = github_repository_api.get_repository(current_user, params[:repository][:github_id])
       @repository = current_user.repositories.build(
-        github_id: repository_data.id,
+        github_id: params[:repository][:github_id],
         name: repository_data.name,
         full_name: repository_data.full_name,
         language: repository_data.language&.downcase

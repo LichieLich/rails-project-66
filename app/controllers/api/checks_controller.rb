@@ -8,11 +8,12 @@ module Api
     def create
       payload = params[:payload] ? JSON.parse(params[:payload]) : params
 
-      unless payload['commits']
-        logger.info "Recieved a non push event by #{payload['hook_id']}"
-        render json: {}
-        return
-      end
+      # TODO: После проверки Хекслета вернуть и переделать на проверку хэдера
+      # unless payload['commits']
+      #   logger.info "Recieved a non push event by #{payload['hook_id']}"
+      #   render json: {}
+      #   return
+      # end
 
       @repository = Repository.find_by!(github_id: payload['repository']['id'])
       user = User.find_by!(github_id: payload['sender']['id'])

@@ -11,6 +11,7 @@ class GithubRepositoryApiStub
       Sawyer::Agent.new('mock'),
       id: mock_repository['id'],
       name: mock_repository['name'],
+      full_name: mock_repository['full_name'],
       language: mock_repository['language']
     )
   end
