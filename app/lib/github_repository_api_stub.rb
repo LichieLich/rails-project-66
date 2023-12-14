@@ -5,7 +5,7 @@ class GithubRepositoryApiStub
 
   def self.get_repository(_user, _id)
     mock_repository =
-      JSON.parse(File.read("#{Rails.root}/test/fixtures/files/mocked_repository.json"))
+      JSON.parse(Rails.root.join('test/fixtures/files/mocked_repository.json').read)
 
     Sawyer::Resource.new(
       Sawyer::Agent.new('mock'),
