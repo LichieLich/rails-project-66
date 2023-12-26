@@ -8,7 +8,7 @@ module Web
     end
 
     def index
-      @repositories = Repository.all
+      @repositories = Repository.where(user_id: current_user.id)
     end
 
     def show
