@@ -1,4 +1,4 @@
-name: Code Check
+name: code-check
 
 env:
   PGDATABASE: notused
