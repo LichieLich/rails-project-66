@@ -6,3 +6,5 @@ ru:
       log_in: Войти
       log_out: Выйти
       repositories: Репозитории
+    errors:
+      no_access: Не достаточно прав для просмотра страницы

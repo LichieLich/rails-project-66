@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/LichieLich/rails-project-66/workflows/hexlet-check/badge.svg)](https://github.com/LichieLich/rails-project-66/actions)
-[![Actions Status](https://github.com/LichieLich/rails-project-66/workflows/Code%20Check/badge.svg)](https://github.com/LichieLich/rails-project-66/actions)
+[![Actions Status](https://github.com/LichieLich/rails-project-66/workflows/code-check/badge.svg)](https://github.com/LichieLich/rails-project-66/actions)
 
 This is my educational app which can clone your github repo and perform lenter check for it. There are only kavascript and ruby linters available for now.
 You should sign in via your github account and choose wigh repo to clone. After that you can perform linter check for last commit. Also it creates webhook to start linter check after each push to your repo.

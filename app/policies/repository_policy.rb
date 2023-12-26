@@ -40,6 +40,6 @@ class RepositoryPolicy < ApplicationPolicy
   private
 
   def owner?
-    repository.user_id == user.id
+    repository.user_id == user&.id
   end
 end

@@ -7,5 +7,11 @@ module Web
     def current_user
       @current_user ||= User.find_by(id: session[:user_id])
     end
+
+    def safe_authorize(object)
+      authorize object
+    rescue NotAuthorizedError
+      redirect_to :root, alert: t('navigation.errors.no_access')
+    end
   end
 end
