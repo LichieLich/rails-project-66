@@ -1,5 +1,9 @@
 ru:
   activerecord:
+    errors:
+      models:
+        repository:
+          blank: не выбран
     models:
       repository: репозиторий
       check: проверка
