@@ -8,9 +8,7 @@ module Web
       @current_user ||= User.find_by(id: session[:user_id])
     end
 
-    def safe_authorize(object)
-      authorize object
-    rescue NotAuthorizedError
+    rescue_from Pundit::NotAuthorizedError do
       redirect_to :root, alert: t('navigation.errors.no_access')
     end
   end

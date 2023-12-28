@@ -7,7 +7,7 @@ module Web::Repositories
     def show
       @check = @repository.checks.find_by(id: params[:id])
 
-      safe_authorize @check
+      authorize @check
 
       unless @check.finished?
         redirect_to repository_url(@repository), notice: t('check.create.unprepared')
@@ -19,7 +19,7 @@ module Web::Repositories
     end
 
     def create
-      safe_authorize Repository::Check
+      authorize Repository::Check
 
       @check = @repository.checks.build(check_params)
       @check.start_check!
