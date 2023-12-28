@@ -20,9 +20,7 @@ module Web
 
     def new
       @repository = Repository.new
-      @repositories = github_repository_api.user_repositories(current_user)&.reject do |repo|
-        Repository.find_by(github_id: repo.id) || Repository.language.values.exclude?(repo.language&.downcase)
-      end
+      @repositories = repositories_available_to_connect
     end
 
     def edit
@@ -39,6 +37,7 @@ module Web
         Github::GetRepositoryJob.perform_later(@repository)
         redirect_to repository_url(@repository), notice: t('repositories.create.success')
       else
+        @repositories = repositories_available_to_connect
         render :new, status: :unprocessable_entity
       end
     end
@@ -64,6 +63,12 @@ module Web
 
     def github_repository_api
       ApplicationContainer[:github_repository_api]
+    end
+
+    def repositories_available_to_connect
+      github_repository_api.user_repositories(current_user)&.reject do |repo|
+        Repository.find_by(github_id: repo.id) || Repository.language.values.exclude?(repo.language&.downcase)
+      end
     end
   end
 end
