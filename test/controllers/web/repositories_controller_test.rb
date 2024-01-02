@@ -41,11 +41,6 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should get edit' do
-    get edit_repository_url(@repository)
-    assert_response :success
-  end
-
   test 'should destroy repository' do
     assert_difference('Repository.count', -1) do
       delete repository_url(@repository)

@@ -8,12 +8,13 @@ Rails.application.routes.draw do
     get 'auth/:provider/callback', to: 'auth#callback', as: :callback_auth
     get 'auth/logout', to: 'auth#logout'
 
-    resources :repositories do
+    resources :repositories, only: %i[create destroy index new show] do
       resources :checks, only: %i[create show], module: :repositories
     end
   end
 
   scope module: :api do
-    post 'api/checks', to: 'checks#create'
+    # post 'api/checks', to: 'checks#create'
+    resources :checks, only: %i[create]
   end
 end

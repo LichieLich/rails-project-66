@@ -23,11 +23,6 @@ module Web
       @repositories = repositories_available_to_connect
     end
 
-    def edit
-      authorize @repository
-      # TODO: Добавить возможность отписки
-    end
-
     def create
       # TODO: Добавить возможность не подписываться на уведомления по почте
 
