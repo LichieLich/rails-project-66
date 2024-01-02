@@ -15,7 +15,7 @@ module Web::Repositories
       end
 
       # TODO: Сделать паджинатор
-      @errors = JSON.parse(@check.linter_result) if @check.linter_result
+      @errors = JSON.parse(@check.linter_result) unless @check.linter_result.empty?
     end
 
     def create

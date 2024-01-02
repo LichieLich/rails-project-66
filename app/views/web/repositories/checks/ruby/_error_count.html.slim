@@ -1,4 +1,5 @@
 - count = 0
-- errors['files']&.each do |error|
-  - count += error['offenses'].count
+- if errors.present?
+  - errors['files']&.each do |error|
+    - count += error['offenses'].count
 td = count
