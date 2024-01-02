@@ -2,8 +2,8 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    before_action only: %i[index new create] do
-      authorize Repository
+    before_action do
+      raise Pundit::NotAuthorizedError unless current_user.present?
     end
 
     def index

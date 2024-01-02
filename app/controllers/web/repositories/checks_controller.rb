@@ -2,6 +2,10 @@
 
 module Web::Repositories
   class ChecksController < ApplicationController
+    before_action do
+      raise Pundit::NotAuthorizedError unless current_user.present?
+    end
+
     def show
       @repository = set_repository
       @check = @repository.checks.find_by(id: params[:id])
@@ -19,7 +23,6 @@ module Web::Repositories
 
     def create
       @repository = set_repository
-      authorize Repository::Check
 
       @check = @repository.checks.build(check_params)
       @check.start_check!

@@ -29,14 +29,6 @@ class RepositoryPolicy < ApplicationPolicy
     owner?
   end
 
-  def edit?
-    owner?
-  end
-
-  def update?
-    owner?
-  end
-
   private
 
   def owner?
