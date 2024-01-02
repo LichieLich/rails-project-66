@@ -7,7 +7,7 @@ module Web
     end
 
     def index
-      @repositories = Repository.where(user_id: current_user.id)
+      @repositories = current_user.repositories
     end
 
     def show
@@ -26,7 +26,7 @@ module Web
     def create
       # TODO: Добавить возможность не подписываться на уведомления по почте
 
-      @repository = current_user.repositories.build(github_id: params[:repository][:github_id])
+      @repository = current_user.repositories.build(repository_params)
 
       if @repository.save
         Github::GetRepositoryJob.perform_later(@repository)

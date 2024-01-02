@@ -6,7 +6,9 @@ class CheckRepositoryJob < ApplicationJob
   include CheckHelper
 
   def perform(user, check)
+    check.start_check!
     repository_directory = "tmp/repositories/#{check.repository.name}"
+
     begin
       check.commit_id = github_repository_api.get_last_commit(user, check.repository.github_id)
       check.got_repository_data!

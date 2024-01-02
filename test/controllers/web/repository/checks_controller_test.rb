@@ -26,9 +26,10 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
       post repository_checks_url(@repository)
     end
 
+    check = @repository.checks.last
     perform_enqueued_jobs
 
-    assert { Repository::Check.last.finished? }
-    assert { Repository::Check.last.passed }
+    assert { check.finished? }
+    assert { check.passed }
   end
 end

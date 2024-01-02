@@ -25,11 +25,14 @@ module Web::Repositories
       @repository = set_repository
 
       @check = @repository.checks.build(check_params)
-      @check.start_check!
-
-      repository_checker.perform_later(current_user, @check)
+      authorize @check
+      # @check.start_check!
+      # binding.irb
+      # repository_checker.perform_later(current_user, @check)
 
       if @check.save
+        # binding.irb
+        repository_checker.perform_later(current_user, @check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else
         redirect_to repository_url(@repository), notice: t('check.create.failure')
@@ -39,7 +42,7 @@ module Web::Repositories
     private
 
     def check_params
-      params.permit(:repository_id, :id)
+      params.permit(:repository_id)
     end
 
     def set_repository
