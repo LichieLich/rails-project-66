@@ -2,9 +2,8 @@
 
 module Web::Repositories
   class ChecksController < ApplicationController
-    before_action :set_repository, only: %i[create show]
-
     def show
+      @repository = set_repository
       @check = @repository.checks.find_by(id: params[:id])
 
       authorize @check
@@ -19,6 +18,7 @@ module Web::Repositories
     end
 
     def create
+      @repository = set_repository
       authorize Repository::Check
 
       @check = @repository.checks.build(check_params)

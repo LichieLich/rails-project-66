@@ -2,7 +2,6 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    before_action :set_repository, only: %i[show destroy]
     before_action only: %i[index new create] do
       authorize Repository
     end
@@ -12,6 +11,7 @@ module Web
     end
 
     def show
+      @repository = set_repository
       authorize @repository
 
       # TODO: автообновление таблицы при изменении статуса
@@ -38,6 +38,7 @@ module Web
     end
 
     def destroy
+      @repository = set_repository
       authorize @repository
 
       Github::DisableWebhookJob.perform_later(@repository)
