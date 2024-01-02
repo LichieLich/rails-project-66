@@ -26,12 +26,8 @@ module Web::Repositories
 
       @check = @repository.checks.build(check_params)
       authorize @check
-      # @check.start_check!
-      # binding.irb
-      # repository_checker.perform_later(current_user, @check)
 
       if @check.save
-        # binding.irb
         repository_checker.perform_later(current_user, @check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else
