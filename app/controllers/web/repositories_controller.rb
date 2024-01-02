@@ -2,7 +2,7 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    before_action :set_repository, only: %i[show edit destroy]
+    before_action :set_repository, only: %i[show destroy]
     before_action only: %i[index new create] do
       authorize Repository
     end

@@ -25,8 +25,8 @@ class ActionDispatch::IntegrationTest
       uid: user.github_id,
       info: {
         email: user.email,
-        name: user.nickname,
-        },
+        name: user.nickname
+      },
       credentials: {
         token: user.token
       }

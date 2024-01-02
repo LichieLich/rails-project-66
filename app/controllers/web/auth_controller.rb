@@ -9,7 +9,6 @@ module Web
       update_user(user, user_info)
       sign_in(user)
       redirect_to :root
-
     rescue StandardError
       redirect_to :root, alert: t('navigation.errors.auth_error')
     end
