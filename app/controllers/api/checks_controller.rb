@@ -9,7 +9,7 @@ module Api
       payload = params[:payload] ? JSON.parse(params[:payload]) : params
 
       # TODO: После проверки Хекслета вернуть и переделать на проверку хэдера
-      # unless payload['commits']
+      # unless request.headers['X-GitHub-Event'] == 'push'
       #   logger.info "Recieved a non push event by #{payload['hook_id']}"
       #   render json: {}
       #   return

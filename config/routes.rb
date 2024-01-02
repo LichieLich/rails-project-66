@@ -13,8 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: :api do
-    # post 'api/checks', to: 'checks#create'
+  namespace :api do
     resources :checks, only: %i[create]
   end
 end
