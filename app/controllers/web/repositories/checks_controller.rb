@@ -3,7 +3,7 @@
 module Web::Repositories
   class ChecksController < ApplicationController
     before_action do
-      raise Pundit::NotAuthorizedError unless current_user.present?
+      raise Pundit::NotAuthorizedError unless signed_in?
     end
 
     def show

@@ -1,6 +1,7 @@
 ru:
   navigation:
     hello: 'Добро пожаловать, %{user_name}'
+    title: 'Rails App 66'
     links:
       home: На главную
       log_in: Войти

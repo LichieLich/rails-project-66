@@ -29,7 +29,7 @@
           tr
             td = link_to check.id, repository_check_path(@repository, check)
             td = check.aasm.human_state
-            td = link_to(check.commit_id[0..6], "https://github.com/#{@repository.full_name}/tree/#{check.commit_id}") if check.commit_id
+            td = link_to_check_commit(check) if check.commit_id
             td = t(check.passed)
             td = check.created_at
     = button_to t('repositories.links.destroy'), repository_path(@repository), method: :delete, class: 'btn btn-danger mb-4',

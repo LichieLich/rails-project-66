@@ -11,7 +11,7 @@ module Api
       # TODO: После проверки Хекслета вернуть и переделать на проверку хэдера
       # unless request.headers['X-GitHub-Event'] == 'push'
       #   logger.info "Recieved a non push event by #{payload['hook_id']}"
-      #   render json: {}
+      #   head :ok
       #   return
       # end
 
@@ -23,7 +23,7 @@ module Api
       repository_checker.perform_later(@repository.user, @check)
       @check.save
 
-      render json: {}
+      head :ok
     end
 
     private
