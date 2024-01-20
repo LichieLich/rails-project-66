@@ -15,7 +15,7 @@
           td = t(@check.passed)
         tr
           td = t('checks.show.table.head.warn_count')
-          = render partial: "web/repositories/checks/#{@repository.language}/error_count", locals: { errors: @errors }
+          td = @check.errors_count
         tr
           td = t('checks.show.table.head.commit_id')
           td = link_to_check_commit(@check) if @check.commit_id

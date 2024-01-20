@@ -3,8 +3,6 @@
 class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
-  include CheckHelper
-
   def perform(user, check)
     check.start_check!
     repository_directory = "tmp/repositories/#{check.repository.name}"
@@ -39,11 +37,12 @@ class CheckRepositoryJob < ApplicationJob
       raise "#{check.repository.language} не поддерживается"
     end
 
-    check.passed = check_has_no_problems?(check)
+    check.errors_count = problems_count(check)
+    check.passed = check.errors_count.zero?
     check.finish_check!
 
     BashRunner.run("rm -r -f #{repository_directory}")
-    send_complete_notification(user, check) unless check_has_no_problems?(check)
+    send_complete_notification(user, check) unless check.passed
   end
 
   def github_repository_api
@@ -57,11 +56,16 @@ class CheckRepositoryJob < ApplicationJob
     ).check_notification.deliver_later
   end
 
-  def check_has_no_problems?(check)
-    return false unless check.linter_result
+  def problems_count(check)
+    return 0 unless check.linter_result
 
-    (check.linter_result[/offense_count":[^0]/] || check.linter_result[/errorCount":[^0]/] ||
-      check.linter_result[/warningCount":[^0]/] || check.linter_result[/fixableErrorCount":[^0]/] ||
-      check.linter_result[/fixableWarningCount":[^0]/]).nil?
+    case check.repository.language
+    when 'ruby'
+      JSON.parse(check.linter_result)['summary']['offense_count']
+    when 'javascript'
+      error_count = 0
+      JSON.parse(check.linter_result).each { |error| error_count += error['errorCount'] }
+      error_count
+    end
   end
 end
