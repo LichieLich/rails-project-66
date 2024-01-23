@@ -26,4 +26,11 @@
           th = t('checks.show.results.table.head.rule_id')
           th = t('checks.show.results.table.head.place')
       tbody
-        = render partial: "web/repositories/checks/#{@repository.language}/table", locals: { errors: @errors, check: @check }
+        - @errors.each do |error_path, error_items|
+          tr
+            td (colspan = "4") = link_to(error_path)
+          - error_items.each do |error|
+            tr
+              td = error[:message]
+              td = error[:rule]
+              td = error[:position]

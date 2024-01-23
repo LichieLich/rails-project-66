@@ -18,7 +18,7 @@ module Web::Repositories
       end
 
       # TODO: Сделать паджинатор
-      @errors = JSON.parse(@check.linter_result) unless @check.linter_result.empty?
+      @errors = LinterResultsUnifier.get_linter_errors(@check)
     end
 
     def create
