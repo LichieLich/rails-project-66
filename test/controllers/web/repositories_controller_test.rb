@@ -42,9 +42,9 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy repository' do
-    assert_difference('Repository.count', -1) do
-      delete repository_url(@repository)
-    end
+    delete repository_url(@repository)
+
+    assert { Repository.find(@repository.id).empty? }
 
     assert_redirected_to repositories_url
   end
