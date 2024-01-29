@@ -28,7 +28,8 @@ module Web::Repositories
       authorize @check
 
       if @check.save
-        repository_checker.perform_later(current_user, @check)
+        # repository_checker.perform_later(current_user, @check)
+        CheckRepositoryJob.perform_later(current_user, @check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else
         redirect_to repository_url(@repository), notice: t('check.create.failure')
