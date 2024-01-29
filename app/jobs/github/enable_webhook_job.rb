@@ -5,7 +5,7 @@ module Github
     queue_as :default
 
     def perform(repository)
-      github_repository_api.enable_webhook(repository.user, repository.full_name)
+      github_repository_api.enable_webhook(repository.user, repository.github_id)
     end
 
     def github_repository_api

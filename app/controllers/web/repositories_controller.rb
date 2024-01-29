@@ -30,6 +30,7 @@ module Web
 
       if @repository.save
         Github::GetRepositoryJob.perform_later(@repository)
+        Github::EnableWebhookJob.perform_later(@repository)
         redirect_to repository_url(@repository), notice: t('repositories.create.success')
       else
         @repositories = repositories_available_to_connect
@@ -41,7 +42,8 @@ module Web
       @repository = set_repository
       authorize @repository
 
-      Github::DisableWebhookJob.perform_later(@repository)
+      # Передаём атрибуты вместо самого репозитория, т.к. джоба исполняется уже после удаления репы
+      Github::DisableWebhookJob.perform_later(@repository.user, @repository.github_id)
       @repository.destroy
 
       redirect_to repositories_url, notice: t('repositories.destroy.success')

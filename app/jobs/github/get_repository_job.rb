@@ -13,8 +13,6 @@ module Github
       repository.git_url = repository_data.clone_url
       repository.ssh_url = repository_data.ssh_url
       repository.save
-
-      Github::EnableWebhookJob.perform_later(repository)
     end
 
     def github_repository_api

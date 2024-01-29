@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GithubRepositoryApi
-  @@routes = Rails.application.routes.url_helpers
+  ROUTES = Rails.application.routes.url_helpers
 
   def self.client(user)
     Octokit::Client.new access_token: user.token, auto_paginate: true
@@ -19,12 +19,18 @@ class GithubRepositoryApi
     client(user).commits(id).first[:sha].to_s
   end
 
-  def self.enable_webhook(user, full_name)
+  def self.get_webhooks(user, github_id)
+    client(user).hooks(github_id).select { |r| r[:config][:url] == ROUTES.api_checks_url }
+  end
+
+  def self.enable_webhook(user, github_id)
+    return if get_webhooks(user, github_id).present?
+
     client(user).create_hook(
-      full_name,
+      github_id,
       'web',
       {
-        url: @@routes.api_checks_url,
+        url: ROUTES.api_checks_url,
         content_type: 'application/json'
       },
       {
@@ -35,8 +41,9 @@ class GithubRepositoryApi
   end
 
   def self.delete_webhook(user, github_id)
-    hooks = client(user).hooks(github_id)
-    webhook = hooks.select { |r| r[:config][:url] ==  @@routes.api_checks_url }
-    client(user).remove_hook(github_id, webhook.first[:id]) unless webhook.first.nil?
+    webhook = get_webhooks(user, github_id)
+    return if webhook.blank?
+
+    client(user).remove_hook(github_id, webhook.first[:id])
   end
 end

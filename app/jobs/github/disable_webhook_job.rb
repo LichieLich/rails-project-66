@@ -4,8 +4,8 @@ module Github
   class DisableWebhookJob < ApplicationJob
     queue_as :default
 
-    def perform(repository)
-      github_repository_api.delete_webhook(repository.user, repository.id)
+    def perform(user, github_id)
+      github_repository_api.delete_webhook(user, github_id)
     end
 
     def github_repository_api
