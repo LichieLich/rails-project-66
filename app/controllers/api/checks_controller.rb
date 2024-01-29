@@ -18,12 +18,13 @@ module Api
       @repository = Repository.find_by!(github_id: payload['repository']['id'])
 
       @check = @repository.checks.build
-      @check.commit_id = payload['head_commit']['id'] if payload['head_commit']
-      @check.start_check!
-      CheckRepositoryJob.perform_later(@check)
-      @check.save
-
-      head :ok
+      
+      if @check.save
+        CheckRepositoryJob.perform_later(@check)
+        head :ok
+      else
+        head 500
+      end
     end
 
     private

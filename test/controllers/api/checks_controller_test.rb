@@ -13,7 +13,7 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Repository::Check.count', 1) do
       post api_checks_url, params: mocked_event
-      assert_response 200
+      assert_response :success
     end
 
     perform_enqueued_jobs

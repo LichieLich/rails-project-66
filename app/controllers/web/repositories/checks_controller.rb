@@ -28,6 +28,7 @@ module Web::Repositories
       authorize @check
 
       if @check.save
+        # binding.irb
         CheckRepositoryJob.perform_later(@check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else

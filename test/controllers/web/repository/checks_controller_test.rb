@@ -16,7 +16,7 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should sredirect to repo unless check is finished' do
+  test 'should redirect to repo unless check is finished' do
     get repository_check_url(@repository, @check)
     assert_redirected_to repository_url(@repository)
   end
@@ -26,8 +26,8 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
       post repository_checks_url(@repository)
     end
 
-    check = @repository.checks.last
     perform_enqueued_jobs
+    check = @repository.checks.last
 
     assert { check.finished? }
     assert { check.passed }

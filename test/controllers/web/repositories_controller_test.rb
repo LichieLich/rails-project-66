@@ -44,7 +44,7 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
   test 'should destroy repository' do
     delete repository_url(@repository)
 
-    assert { Repository.find(@repository.id).empty? }
+    assert { Repository.find_by_id(@repository.id).nil? }
 
     assert_redirected_to repositories_url
   end
