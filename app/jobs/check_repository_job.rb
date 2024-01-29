@@ -3,12 +3,12 @@
 class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
-  def perform(user, check)
+  def perform(check)
     check.start_check!
     repository_directory = "tmp/repositories/#{check.repository.name}"
 
     begin
-      check.commit_id = github_repository_api.get_last_commit(user, check.repository.github_id)
+      check.commit_id = github_repository_api.get_last_commit(check.repository.user, check.repository.github_id)
       check.got_repository_data!
     rescue StandardError => e
       check.fail_get_repository!
@@ -21,7 +21,7 @@ class CheckRepositoryJob < ApplicationJob
       bash_runner.run("git clone #{check.repository.git_url} #{repository_directory}")
     rescue StandardError => e
       check.fail_clone!
-      send_complete_notification(user, check)
+      send_complete_notification(check.repository.user, check)
       raise e
     end
 
