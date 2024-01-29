@@ -3,9 +3,14 @@
 class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
+  LINTER_COMMANDS = {
+    'javascript' => 'npx eslint <%=repository_directory%>/**/*.js --format json --noeslintrc',
+    'ruby' => 'rubocop <%=repository_directory%> --format json'
+  }.freeze
+
   def perform(check)
     check.start_check!
-    repository_directory = "tmp/repositories/#{check.repository.name}"
+    repository_directory = "tmp/repositories/#{check.repository.github_id}"
 
     begin
       check.commit_id = github_repository_api.get_last_commit(check.repository.user, check.repository.github_id)
@@ -16,44 +21,38 @@ class CheckRepositoryJob < ApplicationJob
     end
 
     begin
-      bash_runner.run("rm -r -f #{repository_directory}")
-      bash_runner.run('mkdir tmp/repositories')
       bash_runner.run("git clone #{check.repository.git_url} #{repository_directory}")
     rescue StandardError => e
       check.fail_clone!
-      send_complete_notification(check.repository.user, check)
+      send_complete_notification(check)
       raise e
     end
 
     check.finish_cloning_repository!
 
-    case check.repository.language.downcase
-    when 'javascript'
-      check.linter_result = bash_runner.run("npx eslint #{repository_directory}/**/*.js --format json")
-    when 'ruby'
-      check.linter_result = bash_runner.run("rubocop #{repository_directory} --format json")
-    else
-      send_complete_notification(user, check)
-      raise "#{check.repository.language} не поддерживается"
+    begin
+      check.linter_result = bash_runner.run(ERB.new(LINTER_COMMANDS[check.repository.language.downcase]).result(binding))
+
+      check.errors_count = problems_count(check)
+      check.passed = check.errors_count.zero?
+      check.finish_check!
+    rescue StandardError => e
+      check.fail_linting!
+    ensure
+      bash_runner.run("rm -r -f #{repository_directory}")
+      send_complete_notification(check) unless check.passed
     end
-
-    check.errors_count = problems_count(check)
-    check.passed = check.errors_count.zero?
-    check.finish_check!
-
-    bash_runner.run("rm -r -f #{repository_directory}")
-    send_complete_notification(user, check) unless check.passed
   end
 
-  def send_complete_notification(user, check)
+  def send_complete_notification(check)
     check_notification_mailer.with(
-      user:,
+      user: check.repository.user,
       check:
     ).check_notification.deliver_later
   end
 
   def problems_count(check)
-    return 0 unless check.linter_result
+    return 0 if check.linter_result.empty?
 
     case check.repository.language
     when 'ruby'

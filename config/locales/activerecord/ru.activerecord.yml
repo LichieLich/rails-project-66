@@ -17,5 +17,6 @@ ru:
           finished: Проверка завершена
           failed_clone: Не удалось клонировать репозиторий
           failed_get_repository: Не удалось получить данные о репозитории
+          linter_failed: Не удалось выполнить проверку
       repository:
         github_id: Репозиторий в GitHub

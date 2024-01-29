@@ -13,6 +13,7 @@ class Repository::Check < ApplicationRecord
     state :finished
     state :failed_clone
     state :failed_get_repository
+    state :linter_failed
 
     event :start_check do
       transitions from: :not_checked, to: :getting_repository_data
@@ -36,6 +37,10 @@ class Repository::Check < ApplicationRecord
 
     event :fail_get_repository do
       transitions from: :getting_repository_data, to: :failed_get_repository
+    end
+
+    event :fail_linting do
+      transitions from: :linter_in_progress, to: :linter_failed
     end
   end
 end
