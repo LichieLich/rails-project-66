@@ -7,7 +7,7 @@ class ApplicationContainer
     register :github_repository_api, -> { GithubRepositoryApiStub }
     register :repository_checker, -> { CheckRepositoryJobStub }
     register :bash_runner, -> { BashRunnerStub }
-    register :check_notification_mailer, -> { CheckNotificationMailerStub }
+    register :check_notification_mailer, -> { StubCheckNotificationMailer }
   else
     register :github_repository_api, -> { GithubRepositoryApi }
     register :repository_checker, -> { CheckRepositoryJob }
