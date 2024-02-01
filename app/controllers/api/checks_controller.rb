@@ -26,11 +26,5 @@ module Api
         head :internal_server_error
       end
     end
-
-    private
-
-    def repository_checker
-      ApplicationContainer[:repository_checker]
-    end
   end
 end

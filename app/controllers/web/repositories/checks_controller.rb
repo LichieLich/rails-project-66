@@ -28,7 +28,6 @@ module Web::Repositories
       authorize @check
 
       if @check.save
-        # binding.irb
         CheckRepositoryJob.perform_later(@check)
         redirect_to repository_url(@repository), notice: t('check.create.success')
       else
@@ -44,10 +43,6 @@ module Web::Repositories
 
     def set_repository
       @repository = Repository.find_by(id: params[:repository_id])
-    end
-
-    def repository_checker
-      ApplicationContainer[:repository_checker]
     end
   end
 end
