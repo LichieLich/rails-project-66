@@ -31,12 +31,12 @@ class CheckRepositoryJob < ApplicationJob
     check.finish_cloning_repository!
 
     begin
-      check.linter_result = bash_runner.run(ERB.new(LINTER_COMMANDS[check.repository.language.downcase]).result(binding)) || ""
+      check.linter_result = bash_runner.run(ERB.new(LINTER_COMMANDS[check.repository.language.downcase]).result(binding)) || ''
 
       check.errors_count = problems_count(check)
       check.passed = check.errors_count.zero?
       check.finish_check!
-    rescue StandardError => e
+    rescue StandardError => _e
       check.fail_linting!
     ensure
       bash_runner.run("rm -r -f #{repository_directory}")

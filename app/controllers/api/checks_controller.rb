@@ -18,12 +18,12 @@ module Api
       @repository = Repository.find_by!(github_id: payload['repository']['id'])
 
       @check = @repository.checks.build
-      
+
       if @check.save
         CheckRepositoryJob.perform_later(@check)
         head :ok
       else
-        head 500
+        head :internal_server_error
       end
     end
 
