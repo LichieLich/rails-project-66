@@ -19,12 +19,12 @@ class GithubRepositoryApi
     client(user).commits(id).first[:sha].to_s
   end
 
-  def self.get_webhooks(user, github_id)
-    client(user).hooks(github_id).select { |r| r[:config][:url] == ROUTES.api_checks_url }
+  def self.get_webhook(user, github_id)
+    client(user).hooks(github_id).find { |r| r[:config][:url] == ROUTES.api_checks_url }
   end
 
   def self.enable_webhook(user, github_id)
-    return if get_webhooks(user, github_id).present?
+    return if get_webhook(user, github_id).present?
 
     client(user).create_hook(
       github_id,
@@ -41,9 +41,9 @@ class GithubRepositoryApi
   end
 
   def self.delete_webhook(user, github_id)
-    webhook = get_webhooks(user, github_id)
+    webhook = get_webhook(user, github_id)
     return if webhook.blank?
 
-    client(user).remove_hook(github_id, webhook.first[:id])
+    client(user).remove_hook(github_id, webhook[:id])
   end
 end
