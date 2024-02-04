@@ -31,10 +31,7 @@ class CheckRepositoryJob < ApplicationJob
     check.finish_cloning_repository!
 
     begin
-      Rails.logger.info '!!!!!!'
-      Rails.logger.info bash_runner.run('echo 1234')
       check.linter_result = bash_runner.run(ERB.new(LINTER_COMMANDS[check.repository.language.downcase]).result(binding)) || ''
-      Rails.logger.info check.linter_result
 
       check.errors_count = problems_count(check)
       check.passed = check.errors_count.zero?
