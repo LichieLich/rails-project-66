@@ -37,6 +37,7 @@ class CheckRepositoryJob < ApplicationJob
       check.passed = check.errors_count.zero?
       check.finish_check!
     rescue StandardError => _e
+      check.linter_result = ''
       check.fail_linting!
     ensure
       bash_runner.run("rm -r -f #{repository_directory}")
