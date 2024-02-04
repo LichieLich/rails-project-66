@@ -6,8 +6,8 @@ module Web
       user_info = request.env['omniauth.auth']
 
       user = get_user(user_info)
-      sign_in(user)
       user.save
+      sign_in(user)
       redirect_to :root
     rescue StandardError
       redirect_to :root, alert: t('navigation.errors.auth_error')
