@@ -17,7 +17,7 @@
 # }
 class LinterResultsUnifier
   def self.get_linter_errors(check)
-    return {} if check.blank?
+    return {} if check.linter_result.blank?
 
     errors_as_json = JSON.parse(check.linter_result)
 
