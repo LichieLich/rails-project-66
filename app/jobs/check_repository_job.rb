@@ -5,7 +5,7 @@ class CheckRepositoryJob < ApplicationJob
 
   LINTER_COMMANDS = {
     'javascript' => 'npx eslint <%=repository_directory%>/**/*.js --format json --noeslintrc',
-    'ruby' => 'rubocop <%=repository_directory%> --format json'
+    'ruby' => 'rubocop <%=repository_directory%> --format json -c .rubocop.yml'
   }.freeze
 
   def perform(check)
