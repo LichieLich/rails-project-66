@@ -7,6 +7,7 @@ module Web
 
       user = get_user(user_info)
       sign_in(user)
+      user.save
       redirect_to :root
     rescue StandardError
       redirect_to :root, alert: t('navigation.errors.auth_error')
@@ -20,11 +21,11 @@ module Web
     private
 
     def get_user(user_info)
-      User.find_or_initialize_by(email: user_info['info']['email']) do |user|
-        user.nickname = user_info['info']['nickname']
-        user.token = user_info['credentials']['token']
-        user.github_id = user_info['uid']
-      end
+      user = User.find_or_initialize_by(email: user_info['info']['email'])
+      user.nickname = user_info['info']['nickname']
+      user.token = user_info['credentials']['token']
+      user.github_id = user_info['uid']
+      user
     end
   end
 end
