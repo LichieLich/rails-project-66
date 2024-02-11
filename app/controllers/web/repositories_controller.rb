@@ -54,7 +54,7 @@ module Web
     end
 
     def repository_params
-      params.require(:repository).permit(:github_id, :language, :name, :user_id)
+      params.require(:repository).permit(:github_id)
     end
 
     def github_repository_api

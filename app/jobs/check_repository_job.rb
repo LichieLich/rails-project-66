@@ -4,7 +4,7 @@ class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
   LINTER_COMMANDS = {
-    'javascript' => 'npx eslint <%=repository_directory%>/**/*.js --format json --noeslintrc',
+    'javascript' => 'npx eslint <%=repository_directory%>/**/*.js --format json -c .eslintrc.yml',
     'ruby' => 'rubocop <%=repository_directory%> --format json -c .rubocop.yml'
   }.freeze
 
@@ -46,7 +46,7 @@ class CheckRepositoryJob < ApplicationJob
   end
 
   def send_complete_notification(check)
-    check_notification_mailer.with(
+    CheckNotificationMailer.with(
       user: check.repository.user,
       check:
     ).check_notification.deliver_later
@@ -59,9 +59,7 @@ class CheckRepositoryJob < ApplicationJob
     when 'ruby'
       JSON.parse(check.linter_result)['summary']['offense_count']
     when 'javascript'
-      error_count = 0
-      JSON.parse(check.linter_result).each { |error| error_count += error['errorCount'] }
-      error_count
+      JSON.parse(check.linter_result).sum { |error| error['errorCount'] }
     end
   end
 
@@ -71,9 +69,5 @@ class CheckRepositoryJob < ApplicationJob
 
   def bash_runner
     ApplicationContainer[:bash_runner]
-  end
-
-  def check_notification_mailer
-    ApplicationContainer[:check_notification_mailer]
   end
 end

@@ -28,7 +28,7 @@
       tbody
         - @errors.each do |error_path, error_items|
           tr
-            td (colspan = "4") = link_to(error_path)
+            td (colspan = "4") = link_to_file(@check, error_path)
           - error_items.each do |error|
             tr
               td = error[:message]

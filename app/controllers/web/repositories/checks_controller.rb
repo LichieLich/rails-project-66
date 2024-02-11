@@ -22,7 +22,7 @@ module Web::Repositories
     def create
       @repository = set_repository
 
-      @check = @repository.checks.build(check_params)
+      @check = @repository.checks.build
       authorize @check
 
       if @check.save
@@ -34,10 +34,6 @@ module Web::Repositories
     end
 
     private
-
-    def check_params
-      params.permit(:repository_id)
-    end
 
     def set_repository
       @repository = Repository.find_by(id: params[:repository_id])

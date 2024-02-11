@@ -9,20 +9,8 @@ class RepositoryPolicy < ApplicationPolicy
     @repository = repository
   end
 
-  def index?
-    user.present?
-  end
-
-  def new?
-    user.present?
-  end
-
   def show?
     owner?
-  end
-
-  def create?
-    user.present?
   end
 
   def destroy?

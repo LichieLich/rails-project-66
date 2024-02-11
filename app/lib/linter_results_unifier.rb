@@ -54,7 +54,7 @@ class LinterResultsUnifier
     errors_as_json.each do |file|
       next if file['messages'].empty?
 
-      relative_path = file['path'].gsub("tmp/repositories/#{check.repository.github_id}/", '')
+      relative_path = file['filePath'].gsub(%r{.+#{check.repository.github_id}/}, '')
       result[relative_path] = file['messages'].each_with_object([]) do |offense, arr|
         arr << {
           message: offense['message'],
