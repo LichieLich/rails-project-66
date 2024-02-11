@@ -2,9 +2,7 @@
 
 module Web::Repositories
   class ChecksController < ApplicationController
-    before_action do
-      raise Pundit::NotAuthorizedError unless signed_in?
-    end
+    before_action :authenticate_user!
 
     def show
       @repository = set_repository

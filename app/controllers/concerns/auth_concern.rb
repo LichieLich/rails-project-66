@@ -19,4 +19,8 @@ module AuthConcern
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
   end
+
+  def authenticate_user!
+    redirect_to :root, alert: t('navigation.errors.not_authorized') unless signed_in?
+  end
 end

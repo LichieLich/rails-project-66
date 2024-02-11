@@ -2,9 +2,7 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    before_action do
-      raise Pundit::NotAuthorizedError unless signed_in?
-    end
+    before_action :authenticate_user!
 
     def index
       @repositories = current_user.repositories
